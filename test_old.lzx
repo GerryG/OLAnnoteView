@@ -1,0 +1,56 @@
+<!--=======================================================================-->
+<!--                                                                       -->
+<!-- hello.lzx                                                             -->
+<!--                                                                       -->
+<!-- Laszlo Application Language (LZX) Example                             -->
+<!--                                                                       -->
+<!--=======================================================================-->
+
+<canvas name="mainCv" debug="true"> 
+  <dataset name="httpwagn" request="true" src="http://74.0.57.155:3000/xmlcard/AIR"/>
+  <simplelayout/>
+  <hbox width="100%">
+    <text>Card Name: </text>
+    <inputtext name="cardname" width="100"/> <!-- <handler name="ontext">parent.getbutton.onclick()</handler></edittext> -->
+    <button name="getbutton">Get Card
+      <handler name="onclick">
+        httpwagn.src = "http://74.0.57.155:3000/xmlcard/" +
+                       parent.cardname.getText()
+        httpwagn.doRequest()
+      </handler>
+    </button>
+  </hbox>
+  <dataset name="noteSet"><nodes/></dataset>
+  <datapointer name="wagnsrc" xpath="httpwagn:/*/card">
+    <handler name="ondata">
+      var notes=parent.noteSet()
+      while (this.selectNext()) {
+        Debug.debug("%w", this.serialize())
+        notes.addChild(this)
+      }
+    </handler>
+  </datapointer> 
+  <view name="view1" datapath="noteSet://note">
+    <simplelayout/>
+    <hbox><text text="NodeName: "/><text datapath="./name/text()"/></hbox>
+    <hbox><text text="Icon: "/><text datapath="./icon/text()"/></hbox>
+    <hbox><text text="Note: "/><text datapath="./note/text()"/></hbox>
+    <hbox><text text="Summary: "/><text datapath="./summary/text()"/></hbox>
+    <hbox><text text="Resource: "/><text datapath="./resource/text()"/></hbox>
+    <!-- <hbox><text>Text: </text><inputtext datapath="./serialize()"/><text> After</text></hbox> -->
+    <hbox><text>Icon: </text><text datapath="*/card[@name='icon']/serialize()/lz.BrowserService.xmlEscape()"/></hbox>
+    <hbox><text>Desc: </text><text datapath="*/card[@name='description']/serialize()"/></hbox>
+    <hbox><text>Note: </text><text datapath="*/card[@name='statement']/serialize()"/></hbox>
+    <hbox><text>Resrc: </text><text datapath="*/card[@name='resource']/serialize()"/></hbox>
+    <hbox><text>List: </text><text datapath="*/card[@name='list']/serialize()"/></hbox>
+    <hbox><text>Annote: </text><inputtext datapath="*/card[@name='Annote']/serialize()"/></hbox>
+    <text>Goodbye Laszlo!</text>
+  </view>
+  <text>On Canvas</text>
+</canvas>
+<!-- * X_LZ_COPYRIGHT_BEGIN ***************************************************
+* Copyright 2001-2004 Laszlo Systems, Inc.  All Rights Reserved.              *
+* Use is subject to license terms.                                            *
+* X_LZ_COPYRIGHT_END ****************************************************** -->
+<!-- @LZX_VERSION@                                                         -->
+
