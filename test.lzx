@@ -7,55 +7,67 @@
 <!--=======================================================================-->
 
 <canvas name="mainCv" debug="true"> 
-  <dataset name="httpwagn" request="true" src="http://74.0.57.155:3000/xmlcard/AIR"/>
+  <dataset name="httpwagn">
+<card name="Wagn" link="http://74.0.57.155:3000:3000/wagn/Wagn" date="Mon, 20 Apr 2009 00:17:14 -0500" title="Wagn : Wagn" revision="177" key="wagn" type="Basic">
+<p>This is the home test page</p>
+<p>WIth a foo lines of and mroe junk</p>
+<p>junk content</p>
+<p>[[AIR]]</p>
+<p>[[Another]]</p>
+<p>[[Listcard]][[List2]][[AnotherList]][[ListTest]]</p>
+<p>An annotation as rform: 
+
+<card name="TestCard" type="Randome">Random card</card>
+<card name="Annote" type="Annote" transclude="+annote"><p><span>
+<p>
+
+<card name="statement" type="Phrase" transclude="+statement|display:inline">Home Page, the Wagn Card
+</card></p>
+<p>
+
+<card name="icon" type="Image" transclude="+icon|display:inline"><no_card> Wagn+Annote+icon</no_card> 
+</card>
+
+<card name="description" type="PlainText" transclude="+description|display:inline">This is a description
+</card></p>
+<p>
+
+<card name="resource" type="Phrase" transclude="+resource|display:inline">http://some.url.or.another.com/path/to/it
+</card></p>
+<p>
+
+<card name="list" type="Pointer" transclude="+list|display:inline">[[AIR]]
+[[AnnoteCard]]
+[[Wagn]]
+</card></p>
+</span></p>
+</card></p></card>
+  </dataset>
   <simplelayout/>
-  <hbox width="100%">
-    <text>Card Name: </text>
-    <inputtext name="cardname" width="100"/> <!-- <handler name="ontext">parent.getbutton.onclick()</handler></edittext> -->
-    <button name="getbutton">Get Card
-      <handler name="onclick">
-        httpwagn.src = "http://74.0.57.155:3000/xmlcard/" +
-                       parent.cardname.getText()
-        httpwagn.doRequest()
-        Debug.debug("Onclick, fetch %s", httpwagn.src)
-      </handler>
-    </button>
-  </hbox>
   <dataset name="noteSet"><nodes/></dataset>
   <datapointer name="notes" xpath="noteSet:/nodes[1]" rerunxpath="true"/>
-<view>
-  <datapointer name="wagnsrc" xpath="httpwagn:/" rerunxpath="true">
-    <handler name="ondata">
-      var me=parent.wagnsrc
-      Debug.debug("In wagnsrc.ondata:")
-      //var notes=parent.notes
-      me.setXPath("httpwagn:/*/*/card")
-      Debug.debug("First:%w", me.serialize())
-      while (me.selectNext()) {
-        Debug.debug("Next:%w", me.serialize())
-        var name = me.name
-        var value = me.text()
-        //notes.addNode(name, value)
-      }
-    </handler>
-  </datapointer> 
-</view>
-  <!-- view name="view0" datapath="httpwagn:/outcard/*/card">
-    <hbox><text>Text: </text><inputtext datapath="./serialize()"/><text> After</text></hbox>
-    <hbox><text>Annote: </text><inputtext datapath="*/card[@name='Annote']/serialize()"/></hbox>
-  </view -->
-  <view name="view1" datapath="noteSet://note">
-    <simplelayout/>
-    <hbox><text text="NodeName: "/><text datapath="./name/text()"/></hbox>
-    <hbox><text text="Icon: "/><text datapath="./icon/text()"/></hbox>
-    <hbox><text text="Note: "/><text datapath="./note/text()"/></hbox>
-    <hbox><text text="Summary: "/><text datapath="./summary/text()"/></hbox>
-    <hbox><text text="Resource: "/><text datapath="./resrc/text()"/></hbox>
-    <!-- <hbox><text>Text: </text><inputtext datapath="./serialize()"/><text> After</text></hbox> -->
-    <!-- <hbox><text>Annote: </text><inputtext datapath="*/card[@name='Annote']/serialize()"/></hbox> -->
-    <text>Goodbye Laszlo!</text>
+  <view>
+    <datapointer name="wagnsrc">
+      <handler name="oninit">
+        var me=parent.wagnsrc
+        Debug.debug("In wagnsrc.ondata:")
+        var notes=parent.parent.notes
+        me.setXPath("httpwagn:/card/*/card")
+        Debug.debug("First:%w", me.serialize())
+        while (me.selectNext()) {
+          Debug.debug("Next:%w", me.serialize())
+          var name = me.name
+          var value = me.text()
+          //notes.addNode(name, value)
+        }
+      </handler>
+    </datapointer> 
   </view>
-  <text>On Canvas</text>
+  <view name="view0" datapath="httpwagn:/card/*/card">
+    <simplelayout/>
+    <hbox><text>Text: </text><inputtext datapath="./serialize()"/><text> After</text></hbox>
+    <hbox><text>Annote: </text><inputtext datapath="./text()"/></hbox>
+  </view>
 </canvas>
 <!-- * X_LZ_COPYRIGHT_BEGIN ***************************************************
 * Copyright 2001-2004 Laszlo Systems, Inc.  All Rights Reserved.              *
