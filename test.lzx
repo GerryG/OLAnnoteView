@@ -8,40 +8,47 @@
 
 <canvas name="mainCv" debug="true"> 
   <dataset name="httpwagn">
-<card name="Wagn" link="http://74.0.57.155:3000:3000/wagn/Wagn" date="Mon, 20 Apr 2009 00:17:14 -0500" title="Wagn : Wagn" revision="177" key="wagn" type="Basic">
-<p>This is the home test page</p>
-<p>WIth a foo lines of and mroe junk</p>
-<p>junk content</p>
-<p>[[AIR]]</p>
-<p>[[Another]]</p>
-<p>[[Listcard]][[List2]][[AnotherList]][[ListTest]]</p>
-<p>An annotation as rform: 
-
-<card name="TestCard" type="Randome">Random card</card>
-<card name="Annote" type="Annote" transclude="+annote"><p><span>
-<p>
-
-<card name="statement" type="Phrase" transclude="+statement|display:inline">Home Page, the Wagn Card
-</card></p>
-<p>
-
-<card name="icon" type="Image" transclude="+icon|display:inline"><no_card> Wagn+Annote+icon</no_card> 
-</card>
-
-<card name="description" type="PlainText" transclude="+description|display:inline">This is a description
-</card></p>
-<p>
-
-<card name="resource" type="Phrase" transclude="+resource|display:inline">http://some.url.or.another.com/path/to/it
-</card></p>
-<p>
-
-<card name="list" type="Pointer" transclude="+list|display:inline">[[AIR]]
-[[AnnoteCard]]
-[[Wagn]]
-</card></p>
-</span></p>
-</card></p></card>
+    <card name="Wagn" link="http://74.0.57.155:3000:3000/wagn/Wagn"
+          date="Mon, 20 Apr 2009 00:17:14 -0500"
+          title="Wagn : Wagn" revision="177" key="wagn" type="Basic">
+      <p>This is the home test page</p>
+      <p>WIth a foo lines of and mroe junk</p>
+      <p>junk content</p>
+      <p>[[AIR]]</p>
+      <p>[[Another]]</p>
+      <p>[[Listcard]][[List2]][[AnotherList]][[ListTest]]</p>
+      <p>An annotation as rform: 
+        <card name="TestCard" type="Randome">Random card</card>
+        <card name="Annote" type="Annote" transclude="+annote">
+          <p><span>
+            <p>
+              <card name="statement" type="Phrase"
+                    transclude="+statement|display:inline">
+                Home Page, the Wagn Card
+            </card></p>
+            <p>
+              <card name="icon" type="Image"
+                    transclude="+icon|display:inline">
+                <no_card> Wagn+Annote+icon</no_card>
+              </card>
+              <card name="description" type="PlainText"
+                    transclude="+description|display:inline">
+                This is a description
+            </card></p>
+            <p>
+              <card name="resource" type="Phrase"
+                    transclude="+resource|display:inline">
+                http://some.url.or.another.com/path/to/it
+            </card></p>
+            <p>
+              <card name="list" type="Pointer"
+                    transclude="+list|display:inline">
+              [[AIR]][[AnnoteCard]][[Wagn]]
+            </card></p>
+          </span></p>
+        </card>
+      </p>
+    </card>
   </dataset>
   <simplelayout/>
   <dataset name="noteSet"><nodes/></dataset>
