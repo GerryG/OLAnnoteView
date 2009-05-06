@@ -21,6 +21,7 @@ if [ ! -d ${OPENLASZLO_WORKDIR} ] ; then mkdir ${OPENLASZLO_WORKDIR} ; fi
 if [ ! -e "${OPENLASZLO_WORKDIR}/cardtest.lzx" ] ; then
   ln -s ${WORKDIR}/cardtest.lzx ${OPENLASZLO_WORKDIR}
   ln -s ${WORKDIR}/getnote.lzs ${OPENLASZLO_WORKDIR}
+  ln -s ${OPENLASZLO_WORK}/lz/my-openlaszlo-air-app.lzx ${OPENLASZLO_WORKDIR}
 fi
 
 OPENLASZLO_COMPILER="${OPENLASZLO_HOME}/WEB-INF/lps/server/bin/lzc"

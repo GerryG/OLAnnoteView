@@ -1,7 +1,7 @@
 <canvas width="240" height="320" proxied="false">
 
     <window width="240" height="320" title="OpenLaszlo and AIR" 
-            closeable="true" allowdrag="false" debug="true"`>
+            closeable="true" allowdrag="false" debug="true">
         <attribute name="sendinglc" value="$once{new LocalConnection()}" />
         <attribute name="lcname" value="ol_to_flex_connection"
                    type="string" />
