@@ -6,18 +6,12 @@
 <!--                                                                       -->
 <!--=======================================================================-->
 
-<canvas name="mainCv" debug="true"> 
-  <dataset name="httpwagn">
+<canvas name="mainCv" debug="true"
+        onafterinit="find_el(httpwagn.childNodes, 'card')"> 
+  <dataset name="httpwagn" trimwhitespace="true">
     <card name="Wagn" link="http://74.0.57.155:3000:3000/wagn/Wagn"
           date="Mon, 20 Apr 2009 00:17:14 -0500"
           title="Wagn : Wagn" revision="177" key="wagn" type="Basic">
-      <p>This is the home test page</p>
-      <p>WIth a foo lines of and mroe junk</p>
-      <p>junk content</p>
-      <p>[[AIR]]</p>
-      <p>[[Another]]</p>
-      <p>[[Listcard]][[List2]][[AnotherList]][[ListTest]]</p>
-      <p>An annotation as rform: 
         <card name="TestCard" type="Randome">Random card</card>
         <card name="Annote" type="Annote" transclude="+annote">
           <p><span>
@@ -47,32 +41,17 @@
             </card></p>
           </span></p>
         </card>
-      </p>
     </card>
   </dataset>
-  <simplelayout/>
-  <dataset name="noteSet"><nodes/></dataset>
-  <datapointer name="notes" xpath="noteSet:/nodes[1]" rerunxpath="true"/>
-  <view>
-    <datapointer name="wagnsrc">
-      <handler name="oninit">
-        var me=parent.wagnsrc
-        Debug.debug("In wagnsrc.ondata:")
-        var notes=parent.parent.notes
-        me.setXPath("httpwagn:/card/*/card")
-        Debug.debug("First:%w", me.serialize())
-        while (me.selectNext()) {
-          Debug.debug("Next:%w", me.serialize())
-          var name = me.name
-          var value = me.text()
-          //notes.addNode(name, value)
-        }
-      </handler>
-    </datapointer> 
-  </view>
-  <view name="view0" datapath="httpwagn:/card/*/card">
+  <dataset name="noteSet" trimwhitespace="true"><nodes/></dataset>
+  <datapointer name="notes" xpath="noteSet:/nodes[1]"/>
+  <script src="./getnote.lzs"/>>
+  <view name="view1" datapath="noteSet:/nodes/note">
     <simplelayout/>
-    <hbox><text>Text: </text><inputtext datapath="./serialize()"/><text> After</text></hbox>
-    <hbox><text>Annote: </text><inputtext datapath="./text()"/></hbox>
+    <hbox><text text="NodeName: "/><text datapath="./name/text()"/></hbox>
+    <hbox><text text="Icon: "/><text datapath="./icon/text()"/></hbox>
+    <hbox><text text="Note: "/><text datapath="./note/text()"/></hbox>
+    <hbox><text text="Summary: "/><text datapath="./summary/text()"/></hbox>
+    <hbox><text text="Resource: "/><text datapath="./resrc/text()"/></hbox>
   </view>
 </canvas>

@@ -1,0 +1,74 @@
+function docard(nodes) {
+  find_el(nodes)
+  canvas.nodes.ondata.sendEvent()
+}
+function find_el(nodes, element='card', match="") {
+  var idx
+  //Debug.debug("Find[%s][%s] %w", nodes.length, match, nodes)
+  for (idx=0; idx<nodes.length; idx++) {
+    var sub=nodes[idx]
+    var t=sub.nodeType
+    var nodeName=sub.nodeName
+    var elName
+    var value = ''
+    if (t==lz.DataElement.ELEMENT_NODE) {
+      elName=sub.getAttr('name')
+      if (sub.hasAttr('key')) {
+        // base card, create the node with the CardName
+        if (canvas.notes.data.nodeName != 'nodes') canvas.notes.selectParent() 
+        var newnode = canvas.notes.addNode('annote', '')
+        canvas.notes.setAttribute('p',newnode)
+        canvas.notes.addNode('name', elName)
+        //Debug.debug("Name[%s] %w", elName, canvas.noteSet.serialize())
+      }
+//if (elName != null && nodeName == element) Debug.debug("e{%s}", elName)
+      if (match != '' && nodeName == 'no_card') {
+        value = null
+        //Debug.debug("No card[%s] %w", t, sub)
+      } else {
+        var m
+        if (nodeName == element) {
+          m=elName
+          //Debug.debug("Found[%s, %s] %w", t, m, sub)
+        }
+        find_el(sub.childNodes, element, m)
+      }
+    }
+else {
+    // if we want to include an element for missing pluscards ...
+    //if (value == null || t == lz.DataElement.TEXT_NODE) 
+           //var value=(value == null) ? "NO CARD" : sub.getText()
+    if (t == lz.DataElement.TEXT_NODE) {
+      var name
+      var value=sub.data
+      //Debug.debug("Pre[%s, %s] %s", match, t, value)
+      switch (match) {
+        case "icon":
+          name='icon'
+          break
+        case "description":
+          name='summary'
+               break
+             case "statement":
+               name='note'
+               break
+             case "resource":
+               name='resrc'
+               break
+             case "list":
+               name='list'
+               break
+             case "":
+             default:
+               return;
+           }
+           canvas.notes.addNode(name, value)
+           Debug.debug("New[%s, %s] %w", match, value, canvas.noteSet.serialize())
+         } else {
+            if (t!=lz.DataElement.DOCUMENT_NODE) {
+              Debug.debug("Unknown[%s, %s, %s] %w", t, nodeName, elName, sub)
+            }
+         }
+}
+       }
+     }

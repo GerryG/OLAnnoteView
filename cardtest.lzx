@@ -7,54 +7,35 @@
 <!--                                                                       -->
 <!--=======================================================================-->
 
-<canvas name="mainCv" debug="true"> 
-  <dataset name="httpwagn" request="true" src="http://74.0.57.155:3000/xmlcard/AIR"/>
+<canvas name="mainCv" debug="true">
+        
+  <dataset name="httpwagn" request="true"
+           src="http://74.0.57.155:3000/xmlcard/AIR"
+           ondata="find_el(httpwagn.childNodes)"/>
   <simplelayout/>
   <hbox width="100%">
     <text>Card Name: </text>
-    <inputtext name="cardname" width="100"/> <!-- <handler name="ontext">parent.getbutton.onclick()</handler></edittext> -->
+    <inputtext name="cardname" width="100"/>
     <button name="getbutton">Get Card
       <handler name="onclick">
         httpwagn.src = "http://74.0.57.155:3000/xmlcard/" +
                        parent.cardname.getText()
         httpwagn.doRequest()
-        Debug.debug("Onclick, fetch %s", httpwagn.src)
+        //Debug.debug("Onclick, fetch %s", httpwagn.src)
       </handler>
     </button>
   </hbox>
-  <dataset name="noteSet"><nodes/></dataset>
+  <text>On Canvas</text>
+  <dataset name="noteSet" trimwhitespace="true"><nodes/></dataset>
   <datapointer name="notes" xpath="noteSet:/nodes[1]" rerunxpath="true"/>
-<view>
-  <datapointer name="wagnsrc" xpath="httpwagn:/" rerunxpath="true">
-    <handler name="ondata">
-      var me=parent.wagnsrc
-      Debug.debug("In wagnsrc.ondata:")
-      //var notes=parent.notes
-      me.setXPath("httpwagn:/*/*/card")
-      Debug.debug("First:%w", me.serialize())
-      while (me.selectNext()) {
-        Debug.debug("Next:%w", me.serialize())
-        var name = me.name
-        var value = me.text()
-        //notes.addNode(name, value)
-      }
-    </handler>
-  </datapointer> 
-</view>
-  <!-- view name="view0" datapath="httpwagn:/outcard/*/card">
-    <hbox><text>Text: </text><inputtext datapath="./serialize()"/><text> After</text></hbox>
-    <hbox><text>Annote: </text><inputtext datapath="*/card[@name='Annote']/serialize()"/></hbox>
-  </view -->
-  <view name="view1" datapath="noteSet://note">
+  <script src="./getnote.lzs"/>>
+  <view name="view1" datapath="noteSet:/nodes/annote">
     <simplelayout/>
     <hbox><text text="NodeName: "/><text datapath="./name/text()"/></hbox>
     <hbox><text text="Icon: "/><text datapath="./icon/text()"/></hbox>
     <hbox><text text="Note: "/><text datapath="./note/text()"/></hbox>
     <hbox><text text="Summary: "/><text datapath="./summary/text()"/></hbox>
     <hbox><text text="Resource: "/><text datapath="./resrc/text()"/></hbox>
-    <!-- <hbox><text>Text: </text><inputtext datapath="./serialize()"/><text> After</text></hbox> -->
-    <!-- <hbox><text>Annote: </text><inputtext datapath="*/card[@name='Annote']/serialize()"/></hbox> -->
-    <text>Goodbye Laszlo!</text>
+    <hbox><text text="List: "/><text datapath="./list/text()"/></hbox>
   </view>
-  <text>On Canvas</text>
 </canvas>
