@@ -11,24 +11,23 @@ fi
 export JAVA_HOME=/usr
 
 WORKDIR=/Users/gerry/work
-SRCDIR=${WORKDIR}/OLAnnoteView
+SRCDIR="${WORKDIR}/OLAnnoteView"
 OPENLASZLO_HOME="/Applications/OpenLaszlo Server 4.3.0/Server/lps-4.3.0/"
 OPENLASZLO_WORK="${WORKDIR}/OLAnnoteView/air"
 OPENLASZLO_WORKDIR="${OPENLASZLO_WORK}/work"
 
 OL_BASENAME="cardtest"
-F1='/${OL_BASENAME}.lzx'
-F2='/getnote.lzs'
+F1="${OL_BASENAME}.lzx"
+F2='getnote.lzs'
 # Link sources to workdir
 if [ ! -d ${OPENLASZLO_WORKDIR} ] ; then mkdir ${OPENLASZLO_WORKDIR} ; fi
 if [ ! -e "${OPENLASZLO_WORKDIR}/cardtest.lzx" ] ; then
-  ln -s ${WORKDIR}/cardtest.lzx ${OPENLASZLO_WORKDIR}
-  ln -s ${WORKDIR}/getnote.lzs ${OPENLASZLO_WORKDIR}
-  ln -s ${OPENLASZLO_WORK}/${F1} ${OPENLASZLO_WORKDIR}
-  ln -s ${OPENLASZLO_WORK}/${F2} ${OPENLASZLO_WORKDIR}
+  ln -s ${SRCDIR}/cardtest.lzx ${OPENLASZLO_WORKDIR}
+  ln -s ${SRCDIR}/getnote.lzs ${OPENLASZLO_WORKDIR}
 fi
 
 OPENLASZLO_COMPILER="${OPENLASZLO_HOME}/WEB-INF/lps/server/bin/lzc"
+OPENLASZLO_SCRIPT_COMPILER="${OPENLASZLO_HOME}/WEB-INF/lps/server/bin/lsc"
 cd "${OPENLASZLO_HOME}/WEB-INF/lps/server/bin/"
 export LPS_HOME="${OPENLASZLO_HOME}"
 
@@ -43,9 +42,9 @@ AIR_COMPILER="${FLEX_HOME}/bin/adt"
 AIR_INSTALLER_FILENAME="OpenLaszloAir.air"
 
 OL_RUNTIME_OPTION=swf7
-OL_OPTIONS="--runtime=${OL_RUNTIME_OPTION}"
+OL_OPTIONS="-ldebug --runtime=${OL_RUNTIME_OPTION}"
 
-OL_BIN_FILENAME="${OL_BASENAME}.lzx.${OL_RUNTIME_OPTION}.swf"
+OL_BIN_FILENAME="${OL_BASENAME}.${OL_RUNTIME_OPTION}.swf"
 
 FLEX_BASENAME=MyOpenLaszloAirApp
 FLEX_SRC_FILENAME=${FLEX_BASENAME}.mxml
@@ -53,15 +52,16 @@ FLEX_BIN_FILENAME=${FLEX_BASENAME}.swf
 
 # Compile OpenLaszlo
 OPENLASZLO_FILE1="${OPENLASZLO_WORKDIR}/${F1}"
-if ! "$OPENLASZLO_COMPILER" "$OL_OPTIONS" "$OPENLASZLO_FILE1"; then
-    # OL compile failed
-    exit 1
-fi
 OPENLASZLO_FILE2="${OPENLASZLO_WORKDIR}/${F2}"
-if ! "$OPENLASZLO_COMPILER" "$OL_OPTIONS" "$OPENLASZLO_FILE2"; then
+if ! "$OPENLASZLO_COMPILER" $OL_OPTIONS "$OPENLASZLO_FILE1" ; then
     # OL compile failed
     exit 1
 fi
+#OPENLASZLO_FILE2="${OPENLASZLO_WORKDIR}/${F2}"
+#if ! "$OPENLASZLO_COMPILER" "$OL_OPTIONS" "$OPENLASZLO_FILE2"; then
+#    # OL compile failed
+#    exit 1
+#fi
 
 # Copy OL SWF to Flex directory
 OPENLASZLO_SWF="${OPENLASZLO_WORKDIR}/${OL_BIN_FILENAME}"

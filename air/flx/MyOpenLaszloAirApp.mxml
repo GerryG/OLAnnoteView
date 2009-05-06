@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
-    width="240" height="320"
+    width="600" height="400"
     styleName="plain"
     creationComplete="init()">
     <mx:Style>
@@ -40,5 +40,5 @@
             receivingLC.client = this;
         }
     </mx:Script>
-    <mx:Image source="@Embed('./my-openlaszlo-air-app.lzx.swf7.swf')"/>
+    <mx:Image source="@Embed('./cardtest.swf7.swf')"/>
 </mx:Application>
