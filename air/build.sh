@@ -17,8 +17,11 @@ OPENLASZLO_WORK="${WORKDIR}/OLAnnoteView/air"
 OPENLASZLO_WORKDIR="${OPENLASZLO_WORK}/work"
 
 # Link sources to workdir
-ln -s ${WORKDIR}/cardtest.lzx ${OPENLASZLO_WORKDIR}
-ln -s ${WORKDIR}/getnote.lzs ${OPENLASZLO_WORKDIR}
+if [ ! -d ${OPENLASZLO_WORKDIR} ] ; then mkdir ${OPENLASZLO_WORKDIR} ; fi
+if [ ! -e "${OPENLASZLO_WORKDIR}/cardtest.lzx" ] ; then
+  ln -s ${WORKDIR}/cardtest.lzx ${OPENLASZLO_WORKDIR}
+  ln -s ${WORKDIR}/getnote.lzs ${OPENLASZLO_WORKDIR}
+fi
 
 OPENLASZLO_COMPILER="${OPENLASZLO_HOME}/WEB-INF/lps/server/bin/lzc"
 cd "${OPENLASZLO_HOME}/WEB-INF/lps/server/bin/"
