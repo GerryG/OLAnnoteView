@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://ns.adobe.com/air/application/1.5">
+    <id>OpenLaszloAir</id>
+    <version>0.1</version>
+    <filename>OpenLaszloAir</filename>
+    <initialWindow>
+        <content>MyOpenLaszloAirApp.swf</content>
+        <visible>true</visible>
+        <systemChrome>none</systemChrome>
+        <transparent>true</transparent>
+        <width>240</width>
+        <height>320</height>
+    </initialWindow>
+</application>
