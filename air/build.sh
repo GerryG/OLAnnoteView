@@ -10,18 +10,25 @@ fi
 #       are set and uses MIXED format (forward slashes)
 export JAVA_HOME=/usr
 
+WORKDIR=/Users/gerry/work
+SRCDIR=${WORKDIR}/OLAnnoteView
 OPENLASZLO_HOME="/Applications/OpenLaszlo Server 4.3.0/Server/lps-4.3.0/"
-OPENLASZLO_WORK="/Users/gerry/work/my-apps"
-OPENLASZLO_WORKDIR="${OPENLASZLO_WORK}/lz"
+OPENLASZLO_WORK="${WORKDIR}/OLAnnoteView/air"
+OPENLASZLO_WORKDIR="${OPENLASZLO_WORK}/work"
+
+# Link sources to workdir
+ln -s ${WORKDIR}/cardtest.lzx ${OPENLASZLO_WORKDIR}
+ln -s ${WORKDIR}/getnote.lzs ${OPENLASZLO_WORKDIR}
+
 OPENLASZLO_COMPILER="${OPENLASZLO_HOME}/WEB-INF/lps/server/bin/lzc"
 cd "${OPENLASZLO_HOME}/WEB-INF/lps/server/bin/"
 export LPS_HOME="${OPENLASZLO_HOME}"
 
-FLEX_HOME="/Users/gerry/work/flex_sdk_3.3.0.4852"
+FLEX_HOME="${WORKDIR}/flex_sdk_3.3.0.4852"
 FLEX_WORKDIR=${OPENLASZLO_WORK}/flx/
 FLEX_COMPILER=${FLEX_HOME}/bin/amxmlc # mxmlc
 
-AIR_HOME="/Users/gerry/work/AIR SDK"
+AIR_HOME="${WORKDIR}/work/AIR SDK"
 AIR_WORKDIR="${OPENLASZLO_WORK}"
 AIR_TESTER="${FLEX_HOME}/bin/adl"
 AIR_COMPILER="${FLEX_HOME}/bin/adt"
