@@ -1,4 +1,4 @@
-#!/bin/bash -xv
+#!/bin/bash
 # Build script for OpenLaszlo AIR applications.
 
 COMPILE_ACTION=build
@@ -42,7 +42,7 @@ AIR_COMPILER="${FLEX_HOME}/bin/adt"
 AIR_INSTALLER_FILENAME="OpenLaszloAir.air"
 
 OL_RUNTIME_OPTION=swf7
-OL_OPTIONS="-ldebug --runtime=${OL_RUNTIME_OPTION}"
+OL_OPTIONS="-linfo --runtime=${OL_RUNTIME_OPTION}"
 
 OL_BIN_FILENAME="${OL_BASENAME}.${OL_RUNTIME_OPTION}.swf"
 

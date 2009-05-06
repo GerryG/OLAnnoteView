@@ -7,8 +7,22 @@
 <!--                                                                       -->
 <!--=======================================================================-->
 
-<canvas name="mainCv" debug="true">
-        
+<canvas width="600" height="400" proxied="false">
+ <window width="240" height="320" title="OpenLaszlo and AIR"
+         closeable="true" allowdrag="false">
+  <attribute name="sendinglc" value="$once{new LocalConnection()}" />
+  <attribute name="lcname" value="ol_to_flex_connection"
+             type="string" />
+
+  <method name="close">
+            sendinglc.send(lcname, "closeApplication");
+  </method>
+  <handler name="onmousedown">
+            sendinglc.send(lcname, "beginDrag");
+  </handler>
+  <handler name="onmouseup">
+            sendingLC.send(lcname, "endDrag");
+  </handler>
   <dataset name="httpwagn" request="true"
            src="http://74.0.57.155:3000/xmlcard/AIR"
            ondata="find_el(httpwagn.childNodes)"/>
@@ -38,4 +52,5 @@
     <hbox><text text="Resource: "/><text datapath="./resrc/text()"/></hbox>
     <hbox><text text="List: "/><text datapath="./list/text()"/></hbox>
   </view>
+ </window>
 </canvas>
