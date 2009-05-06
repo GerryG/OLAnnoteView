@@ -1,4 +1,4 @@
-#!/bin/bash -xv
+#!/bin/bash
 # Build script for OpenLaszlo AIR applications.
 
 COMPILE_ACTION=build
