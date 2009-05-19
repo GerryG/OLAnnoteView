@@ -26,6 +26,7 @@
            ondata="find_el(httpwagn.childNodes)"/>
   <simplelayout/>
   <hbox width="100%">
+  <text multiline="true">
     <text>Card Name: </text>
     <inputtext name="cardname" width="100"/>
     <button name="getbutton">Get Card
@@ -36,6 +37,8 @@
         //Debug.debug("Onclick, fetch %s", httpwagn.src)
       </handler>
     </button>
+  </text>
+  <vscrollbar/>
   </hbox>
   <text>On Canvas</text>
   <dataset name="noteSet" trimwhitespace="true"><nodes/></dataset>
