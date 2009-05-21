@@ -7,24 +7,7 @@
 <!--                                                                       -->
 <!--=======================================================================-->
 
-<canvas width="600" height="400" proxied="false" title="OpenLaszlo and AIR" bgcolor="#e5e5e5">
- <!-- for stand alone deploy ...
-  <attribute name="sendinglc" value="$once{new LocalConnection()}" />
-  <attribute name="lcname" value="ol_to_flex_connection"
-             type="string" />
-
-  <method name="close">
-            sendinglc.send(lcname, "closeApplication");
-  </method>
-  <handler name="onmousedown">
-            sendinglc.send(lcname, "beginDrag");
-  </handler>
-  <handler name="onmouseup">
-            sendinglc.send(lcname, "endDrag");
-  </handler> -->
-
-  <include href="cardview.lzx"/>
-  <include href="cardlist.lzx"/>
+<canvas title="OpenLaszlo and AIR" height="400" width="400" debug="false" bgcolor="#e5e5e5" proxied="false">
 
     <!-- APPLICATION WITH SCROLLBARS -->
     <!-- Both outer views are used for showing the scrollbars within the application -->
@@ -33,16 +16,76 @@
 
         <!-- This view is used to show the application scrollbars. As soon as this
              view is bigger than the surrounding view the scrollbars will show. -->
-        <view id="scrollContent" x="0" width="600" align="center"
+        <view id="scrollContent" x="0" width="600" height="2000" align="center"
             pixellock="true">
 
-       <!-- Application Here -->
+<!--       Application Here -->
 
-          <simplelayout/>
-          <query/>
-          <cardlist/>
+  <view width="100%" height="100%">
+   <simplelayout axis="y" spacing="10"/>
+    <text>foo</text>
+    <text>bar</text>
+    <text>baz</text>
+    <text>more text to put out this is a lot of text ...</text>
+    <text>waldo</text>
+    <text>sssssssj jjjjjjjjjj jjjjjjjjjjj sssssssss s  s s ss sssssss ssssssssss s s ssssssssss s s s sssssssss s ss j</text>
+    <text>foo1</text>
+    <text>foo2</text>
+    <text>foo3</text>
+    <text>foo4</text>
+    <text>foo</text>
+    <text>bar</text>
+    <text>baz</text>
+    <text>more text to put out this is a lot of text ...</text>
+    <text>waldo</text>
+    <text>sssssssj jjjjjjjjjj jjjjjjjjjjj sssssssss s  s s ss sssssss ssssssssss s s ssssssssss s s s sssssssss s ss j</text>
+    <text>foo1</text>
+    <text>foo2</text>
+    <text>foo3</text>
+    <text>foo4</text>
+    <text>foo</text>
+    <text>bar</text>
+    <text>baz</text>
+    <text>more text to put out this is a lot of text ...</text>
+    <text>waldo</text>
+    <text>sssssssj jjjjjjjjjj jjjjjjjjjjj sssssssss s  s s ss sssssss ssssssssss s s ssssssssss s s s sssssssss s ss j</text>
+    <text>foo1</text>
+    <text>foo2</text>
+    <text>foo3</text>
+    <text>foo4</text>
+    <text>foo</text>
+    <text>bar</text>
+    <text>baz</text>
+    <text>more text to put out this is a lot of text ...</text>
+    <text>waldo</text>
+    <text>sssssssj jjjjjjjjjj jjjjjjjjjjj sssssssss s  s s ss sssssss ssssssssss s s ssssssssss s s s sssssssss s ss j</text>
+    <text>foo1</text>
+    <text>foo2</text>
+    <text>foo3</text>
+    <text>foo4</text>
+    <text>foo</text>
+    <text>bar</text>
+    <text>baz</text>
+    <text>more text to put out this is a lot of text ...</text>
+    <text>waldo</text>
+    <text>sssssssj jjjjjjjjjj jjjjjjjjjjj sssssssss s  s s ss sssssss ssssssssss s s ssssssssss s s s sssssssss s ss j</text>
+    <text>foo1</text>
+    <text>foo2</text>
+    <text>foo3</text>
+    <text>foo4</text>
+    <text>foo</text>
+    <text>bar</text>
+    <text>baz</text>
+    <text>more text to put out this is a lot of text ...</text>
+    <text>waldo</text>
+    <text>sssssssj jjjjjjjjjj jjjjjjjjjjj sssssssss s  s s ss sssssss ssssssssss s s ssssssssss s s s sssssssss s ss j</text>
+    <text>foo1</text>
+    <text>foo2</text>
+    <text>foo3</text>
+    <text>foo4</text>
+  </view>
 
-        </view>
+            </view>
 
 <!-- end of scroll content -->
 

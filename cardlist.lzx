@@ -1,0 +1,37 @@
+
+ <!-- Fetch annotations cards from wagn, and create a local dataset -->
+<library>
+  <dataset name="httpwagn" request="true"
+           src="http://74.0.57.155:3000/xmlcard/AIR"
+           ondata="find_el(httpwagn.childNodes)"/>
+  <dataset name="noteSet" trimwhitespace="true"><nodes/></dataset>
+  <datapointer name="notes" xpath="noteSet:/nodes[1]" rerunxpath="true"/>
+  <script src="./getnote.lzs"/>>
+
+  <class name="query">
+    <attribute name="name"/>
+    <hbox>
+      <text>Card Name: </text>
+      <inputtext name="cnameInput" width="100"/>
+      <button name="getbutton">Get Card
+        <handler name="onclick">
+          httpwagn.src = "http://74.0.57.155:3000/xmlcard/" +
+                         parent.cnameInput.getText()
+          httpwagn.doRequest()
+          //Debug.debug("Onclick, fetch %s", httpwagn.src)
+        </handler>
+      </button>
+    </hbox>
+  </class>
+
+  <class name="cardlist">
+    <cardlist/>
+    <vbox>
+      <simplelayout/>
+      <view datapath="noteSet:/nodes/annote">
+        <simplelayout/>
+        <cardview/>
+      </view>
+    </vbox>
+  </class>
+</library>
