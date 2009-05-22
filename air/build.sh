@@ -42,6 +42,8 @@ if [ ! -d ${OPENLASZLO_WORKDIR} ] ; then
 fi
 if [ ! -e "${OPENLASZLO_WORKDIR}/cardtest.lzx" ] ; then
   ln -s ${SRCDIR}/cardtest.lzx ${OPENLASZLO_WORKDIR}
+  ln -s ${SRCDIR}/cardlist.lzx ${OPENLASZLO_WORKDIR}
+  ln -s ${SRCDIR}/cardview.lzx ${OPENLASZLO_WORKDIR}
   ln -s ${SRCDIR}/getnote.lzs ${OPENLASZLO_WORKDIR}
 fi
 

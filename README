@@ -1,0 +1,15 @@
+
+Sandbox for working on OpenLaszlo RIA apps for an model of web resource
+annotations.  Initially these are stored as Wagn cards and accessed via XML
+using an experimental XML interface to Wagn.
+
+cardtest.lzx    First test app, scrollable window to app in:
+cardlist.lzx    Data sources and a display class for query and cardlists
+getnote.lzs     Script code to search the returned XML, turn it into local XML
+cardview.lzx    View for a single card
+cc.lzx          Simple test to validate app window part
+./air/build.sh  Build as a AIR app (with 'test' as argument to run it locally)
+
+You have to start the OpenLaszlo server first to access as a web app.  And have the code installed in the 'my-apps' directory of the server.  Then you access
+with:  http://127.0.0.1:8080/lps-4.3.0/my-apps/cardtest.lzx
+
