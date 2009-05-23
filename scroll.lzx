@@ -1,10 +1,13 @@
 <library>
   <class name="scrollview" defaultplacement="content" clip="true" focusable="true">
+    <attribute type="string" name="headtext" value="Your data:"/>
+    <attribute type="string" name="foottext" value="End of data"/>
     <view name="oneview">
       <simplelayout/>
-      <text>Before</text>
+      <text text="${parent.parent.headtext}"/>
       <view name="content"/>
-      <text>After</text>
+      <text text="${parent.parent.foottext}"/>
+      <text text=""/>
     </view>
     <vscrollbar name="vscroll" id="cvscroll" x="${parent.width-this.width}"
         height="${this.scrollheight}" scrolltarget="${parent.oneview}" visible="true">
@@ -14,13 +17,8 @@
         if (parent.hscroll.visible == true){ var h = parent.height-15 }
         else { var h = parent.height+1 }
         this.setAttribute('scrollheight', h);
-Debug.debug("OnH: %s", h)
       </handler>
-      <handler name="oninit">
-        parent.onheight.sendEvent();
-Debug.debug("InitH: H:%s T:%s CH:%s %s", this.scrollheight, parent,
- parent.oneview.content.height, parent.height)
-      </handler>
+      <handler name="oninit"> parent.onheight.sendEvent(); </handler>
     </vscrollbar>
     <hscrollbar name="hscroll" id="chscroll" y="${parent.height-this.height}"
         width="${this.scrollwidth}" scrolltarget="${parent.oneview}" visible="true">
@@ -29,13 +27,8 @@ Debug.debug("InitH: H:%s T:%s CH:%s %s", this.scrollheight, parent,
         if (parent.vscroll.visible == true) { var w = parent.width-15; }
         else { var w = parent.width+1 }
         this.setAttribute('scrollwidth', w);
-Debug.debug("OnW: %s", w)
       </handler>
-      <handler name="oninit">
-        parent.onwidth.sendEvent();
-Debug.debug("InitW: W:%s T:%s CW:%s %s", this.scrollwidth, parent,
- parent.oneview.content.width, parent.width)
-      </handler>
+      <handler name="oninit"> parent.onwidth.sendEvent(); </handler>
     </hscrollbar>
 
     <!-- BOX IN BOTTOM RIGHT CORNER -->
