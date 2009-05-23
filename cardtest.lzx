@@ -26,60 +26,14 @@
 
   <include href="cardlist.lzx"/>
   <include href="cardview.lzx"/>
+  <include href="scroll.lzx"/>
+  
 
-  <!-- APPLICATION WITH SCROLLBARS -->
-  <!-- Both outer views are used for showing the scrollbars within the
-       application -->
-  <view height="${canvas.height}" width="${canvas.width}" clip="true" align="center">
+  <simplelayout/>
+  <query/>
 
-
-    <!-- This view is used to show the application scrollbars. As soon as this
-         view is bigger than the surrounding view the scrollbars will show. -->
-    <view id="scrollContent" x="0" align="center" pixellock="true">
-      <!-- Application Here -->
-
-      <simplelayout/>
-      <query/>
+  <scrollview height="${canvas.height-this.y}" width="${canvas.width}">
       <cardlist/>
+  </scrollview>
 
-    </view>
-
-    <!-- end of scroll content -->
-
-    <!-- APP SCROLLBARS -->
-    <vscrollbar name="vscroll" id="cvscroll" x="${canvas.width-this.width}"
-                height="${this.scrollheight}" scrolltarget="${scrollContent}"
-                visible="${scrollContent.height-15>=canvas.height}"
-                usemousewheel="true">
-      <attribute name="scrollheight" value="0"/>
-      <handler name="onheight" reference="canvas">
-        if (parent.hscroll.visible == true) { var h = canvas.height-15; }
-        else { var h = canvas.height+1; }
-        this.setAttribute('scrollheight', h);
-        canvas.onwidth.sendEvent()
-      </handler>
-      <handler name="oninit"> canvas.onheight.sendEvent(); </handler>
-    </vscrollbar>
-
-    <hscrollbar name="hscroll" id="chscroll" y="${canvas.height-this.height}"
-            width="${this.scrollwidth}" scrolltarget="${scrollContent}"
-            visible="${scrollContent.width-15>=canvas.width}">
-      <attribute name="scrollwidth" value="0"/>
-      <handler name="onwidth" reference="canvas">
-         if (parent.vscroll.visible == true) { var w = canvas.width-15; }
-         else { var w = canvas.width+1; }
-         this.setAttribute('scrollwidth', w);
-          canvas.onheight.sendEvent()
-      </handler>
-      <handler name="oninit"> canvas.onwidth.sendEvent(); </handler>
-    </hscrollbar>
-
-    <!-- BOX IN BOTTOM RIGHT CORNER -->
-    <view align="right" valign="bottom" bgcolor="$once{canvas.bgcolor}"
-         clickable="false" width="15" height="15"
-         visible="${parent.hscroll.visible &amp;&amp; parent.vscroll.visible}">
-      <handler name="onmouseover"> lz.Cursor.showHandCursor(false); </handler>
-      <handler name="onmouseout"> lz.Cursor.showHandCursor(true); </handler>
-    </view>
-  </view><!-- clipping view -->
 </canvas>

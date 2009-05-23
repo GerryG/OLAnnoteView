@@ -48,21 +48,15 @@ function find_el(nodes, element='card', deep=0) {
             if (content != null) {
               canvas.notes.addNode(name, content)
               Debug.debug("Store field[%s, %s] %s", name, elemName, content)
+            } else {
+              canvas.notes.addNode(name, 'Missing')
+              Debug.debug("Missing field[%s, %s] %s", name, elemName, content)
             }
           }
-//else { Debug.debug("Empty elem[%s] %w", name, canvas.noteSet.serialize()) }
           continue
         }
-// else if (children) {
-//} else { Debug.debug("Nothing"); continue; }
       }
       if (children) { find_el(children, element, deep+1) }
-    } else if (t == lz.DataElement.TEXT_NODE) {
-      Debug.debug("Data %s", subNode.data)
-    } else {
-      //if (t!=lz.DataElement.DOCUMENT_NODE) {
-        Debug.debug("Unknown[%s, %s, %s] %w", t, nodeName, elemName, subNode)
-      //}
     }
   }
 }

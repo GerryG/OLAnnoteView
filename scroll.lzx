@@ -1,0 +1,53 @@
+<library>
+  <class name="scrollview" defaultplacement="content" clip="true" focusable="true">
+    <view name="oneview">
+      <simplelayout/>
+      <text>Before</text>
+      <view name="content"/>
+      <text>After</text>
+    </view>
+    <vscrollbar name="vscroll" id="cvscroll" x="${parent.width-this.width}"
+        height="${this.scrollheight}" scrolltarget="${parent.oneview}" visible="true">
+        <!-- visible="${parent.oneview.content.height-15>=parent.height}" -->
+      <attribute name="scrollheight" value="0"/>
+      <handler name="onheight" reference="parent">
+        if (parent.hscroll.visible == true){ var h = parent.height-15 }
+        else { var h = parent.height+1 }
+        this.setAttribute('scrollheight', h);
+Debug.debug("OnH: %s", h)
+      </handler>
+      <handler name="oninit">
+        parent.onheight.sendEvent();
+Debug.debug("InitH: H:%s T:%s CH:%s %s", this.scrollheight, parent,
+ parent.oneview.content.height, parent.height)
+      </handler>
+    </vscrollbar>
+    <hscrollbar name="hscroll" id="chscroll" y="${parent.height-this.height}"
+        width="${this.scrollwidth}" scrolltarget="${parent.oneview}" visible="true">
+      <attribute name="scrollwidth" value="0"/>
+      <handler name="onwidth" reference="parent">
+        if (parent.vscroll.visible == true) { var w = parent.width-15; }
+        else { var w = parent.width+1 }
+        this.setAttribute('scrollwidth', w);
+Debug.debug("OnW: %s", w)
+      </handler>
+      <handler name="oninit">
+        parent.onwidth.sendEvent();
+Debug.debug("InitW: W:%s T:%s CW:%s %s", this.scrollwidth, parent,
+ parent.oneview.content.width, parent.width)
+      </handler>
+    </hscrollbar>
+
+    <!-- BOX IN BOTTOM RIGHT CORNER -->
+    <view align="right" valign="bottom" bgcolor="$once{canvas.bgcolor}"
+          clickable="false" width="15" height="15"
+          visible="${parent.hscroll.visible &amp;&amp; parent.vscroll.visible}">
+      <handler name="onmouseover"> lz.Cursor.showHandCursor(false) </handler>
+      <handler name="onmouseout"> lz.Cursor.showHandCursor(true) </handler>
+    </view>
+
+    <!-- <scrollbar name="sbx" axis="x"/>
+    <scrollbar name="sby" visible="true"/> -->
+  </class>
+</library>
+
