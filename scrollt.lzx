@@ -1,0 +1,19 @@
+<library>
+  <class name="scrollview" defaultplacement="scview" extends="view">
+    <!-- This view is used to show the application scrollbars. As soon as this
+         view is bigger than the surrounding view the scrollbars will show. -->
+    <simplelayout/>
+    <text> Before box </text>
+    <view name="scview" id="scrollContent" x="0" pixellock="true" oninit="onheight.sendEvent()">
+
+    <!-- Application Here -->
+
+
+    </view>
+
+<!-- end of scroll content -->
+
+    <text> After box </text>
+
+  </class><!-- clipping view -->
+</library>
