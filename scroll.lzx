@@ -10,8 +10,8 @@
       <text text=""/>
     </view>
     <vscrollbar name="vscroll" id="cvscroll" x="${parent.width-this.width}"
-        height="${this.scrollheight}" scrolltarget="${parent.oneview}" visible="true">
-        <!-- visible="${parent.oneview.content.height-15>=parent.height}" -->
+        height="${this.scrollheight}" scrolltarget="${parent.oneview}"
+        visible="${parent.oneview.content.height-15>=parent.height}">
       <attribute name="scrollheight" value="0"/>
       <handler name="onheight" reference="parent">
         if (parent.hscroll.visible == true){ var h = parent.height-15 }
@@ -21,7 +21,8 @@
       <handler name="oninit"> parent.onheight.sendEvent(); </handler>
     </vscrollbar>
     <hscrollbar name="hscroll" id="chscroll" y="${parent.height-this.height}"
-        width="${this.scrollwidth}" scrolltarget="${parent.oneview}" visible="true">
+        width="${this.scrollwidth}" scrolltarget="${parent.oneview}"
+        visible="${parent.oneview.content.width-15>=parent.width}">
       <attribute name="scrollwidth" value="0"/>
       <handler name="onwidth" reference="parent">
         if (parent.vscroll.visible == true) { var w = parent.width-15; }

@@ -28,11 +28,11 @@
   <include href="cardview.lzx"/>
   <include href="scroll.lzx"/>
   
-
   <simplelayout/>
   <query/>
 
-  <scrollview height="${canvas.height-this.y}" width="${canvas.width}">
+  <scrollview headtext="List of Annotations Fetched" foottext="&lt;br&gt; End of List"
+              height="${canvas.height-this.y}" width="${canvas.width}">
       <cardlist/>
   </scrollview>
 
