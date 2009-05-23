@@ -45,6 +45,7 @@ if [ ! -e "${OPENLASZLO_WORKDIR}/cardtest.lzx" ] ; then
   ln -s ${SRCDIR}/cardlist.lzx ${OPENLASZLO_WORKDIR}
   ln -s ${SRCDIR}/cardview.lzx ${OPENLASZLO_WORKDIR}
   ln -s ${SRCDIR}/getnote.lzs ${OPENLASZLO_WORKDIR}
+  ln -s ${SRCDIR}/scroll.lzx ${OPENLASZLO_WORKDIR}
 fi
 
 OL_RUNTIME_OPTION=swf7
