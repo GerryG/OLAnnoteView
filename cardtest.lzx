@@ -35,7 +35,7 @@
 
     <!-- This view is used to show the application scrollbars. As soon as this
          view is bigger than the surrounding view the scrollbars will show. -->
-    <view id="scrollContent" x="0" width="600" align="center" pixellock="true">
+    <view id="scrollContent" x="0" align="center" pixellock="true">
       <!-- Application Here -->
 
       <simplelayout/>
@@ -49,29 +49,27 @@
     <!-- APP SCROLLBARS -->
     <vscrollbar name="vscroll" id="cvscroll" x="${canvas.width-this.width}"
                 height="${this.scrollheight}" scrolltarget="${scrollContent}"
-                visible="${scrollContent.height-15>=canvas.height}">
+                visible="${scrollContent.height-15>=canvas.height}"
+                usemousewheel="true">
       <attribute name="scrollheight" value="0"/>
       <handler name="onheight" reference="canvas">
-        if (parent.hscroll.visible == true) {
-          var h = canvas.height-15;
-        } else {
-          var h = canvas.height+1;
-        }
+        if (parent.hscroll.visible == true) { var h = canvas.height-15; }
+        else { var h = canvas.height+1; }
         this.setAttribute('scrollheight', h);
+        canvas.onwidth.sendEvent()
       </handler>
-      <handler name="oninit">
-        canvas.onheight.sendEvent();
-      </handler>
+      <handler name="oninit"> canvas.onheight.sendEvent(); </handler>
     </vscrollbar>
+
     <hscrollbar name="hscroll" id="chscroll" y="${canvas.height-this.height}"
             width="${this.scrollwidth}" scrolltarget="${scrollContent}"
-            visible="${scrollContent.width-20>=canvas.width}"
-            options="ignorelayout">
+            visible="${scrollContent.width-15>=canvas.width}">
       <attribute name="scrollwidth" value="0"/>
       <handler name="onwidth" reference="canvas">
          if (parent.vscroll.visible == true) { var w = canvas.width-15; }
          else { var w = canvas.width+1; }
          this.setAttribute('scrollwidth', w);
+          canvas.onheight.sendEvent()
       </handler>
       <handler name="oninit"> canvas.onwidth.sendEvent(); </handler>
     </hscrollbar>
