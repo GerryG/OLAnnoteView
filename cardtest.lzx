@@ -17,12 +17,6 @@
   <method name="close">
             sendinglc.send(lcname, "closeApplication");
   </method>
-  <handler name="onmousedown">
-            sendinglc.send(lcname, "beginDrag");
-  </handler>
-  <handler name="onmouseup">
-            sendinglc.send(lcname, "endDrag");
-  </handler>
 
   <include href="cardlist.lzx"/>
   <include href="cardview.lzx"/>
