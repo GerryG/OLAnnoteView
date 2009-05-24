@@ -7,7 +7,8 @@
 <!--                                                                       -->
 <!--=======================================================================-->
 
-<canvas width="600" height="400" proxied="false" title="OpenLaszlo and AIR" bgcolor="#e5e5e5">
+<canvas width="600" height="400" proxied="false" title="OpenLaszlo and AIR"
+  bgcolor="#e555e5" onwidth="listView.onwidth.sendEvent()" onheight="listView.onheight.sendEvent()">
 
   <!-- for stand alone deploy ... -->
   <attribute name="sendinglc" value="$once{new LocalConnection()}" />
@@ -25,7 +26,7 @@
   <simplelayout/>
   <query/>
 
-  <scrollview headtext="List of Annotations Fetched" foottext="&lt;br&gt; End of List"
+  <scrollview id="listView" headtext="List of Annotations Fetched" foottext="End of List"
               height="${canvas.height-this.y}" width="${canvas.width}">
       <cardlist/>
   </scrollview>
