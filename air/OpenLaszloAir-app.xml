@@ -6,8 +6,8 @@
     <initialWindow>
         <content>MyOpenLaszloAirApp.swf</content>
         <visible>true</visible>
-        <!-- <systemChrome>none</systemChrome>
-        <transparent>true</transparent> -->
+        <systemChrome>none</systemChrome>
+        <transparent>true</transparent>
         <width>600</width>
         <height>400</height>
     </initialWindow>
