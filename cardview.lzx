@@ -4,38 +4,28 @@
 <library>
 
   <!-- Simple text version of an annotation -->
-  <class name="cardview" extends="vbox">
+  <class name="cardview" extends="vbox" oninit="oncardname.sendEvent()">
     <attribute name="cardname" type="string"/>
     <attribute name="resrc" type="string"/>
     <attribute name="note" type="string"/>
     <attribute name="summary" type="string"/>
     <attribute name="icon" type="string"/>
     <attribute name="list" type="string"/>
-    <handler name="oninit">
-this.oncardname.sendEvent()
+    <!-- <handler name="oninit"> oncardname.sendEvent()
 Debug.debug("oninit cardview")
-    </handler>
-    <handler name="oncardname">
-Debug.debug("setcardname: %w %s", this.hb1, cardname)
- hb1.nametxt.setText(cardname) </handler>
-    <handler name="onresrc">
-Debug.debug("setresrc: %w %s", this.hb5, resrc)
- hb5.resrctxt.setText(resrc) </handler>
-    <handler name="onnote">
-Debug.debug("setnote: %w %s", this.hb3, note)
- hb3.notetxt.setText(note) </handler>
-    <handler name="onsummary">
-Debug.debug("setsummary: %w %s", this.hb4, summary)
- hb4.summarytxt.setText(summary) </handler>
+    </handler -->
+    <handler name="oncardname"> hb1.nametxt.setText(cardname) </handler>
+    <handler name="onresrc"> hb5.resrctxt.setText(resrc) </handler>
+    <handler name="onnote"> hb3.notetxt.setText(note) </handler>
+    <handler name="onsummary"> hb4.summarytxt.setText(summary) </handler>
     <handler name="onicon">
-Debug.debug("seticon: %w %s", this.hb2, icon)
- hb2.icontxt.setText(icon) </handler>
-    <handler name="onlist">
-Debug.debug("setlist: %w %s", this.hb6, list)
- hb6.listtxt.setText(list) </handler>
+       var nn = new lz.text(hb2, icon)
+Debug.debug("seticon: %w %s\nNN:%w", hb2.subviews, icon, nn)
+    </handler>
+    <handler name="onlist"> hb6.listtxt.setText(list) </handler>
     <simplelayout/>
     <hbox name="hb1"><text text="NodeName: "/><text name="nametxt"/></hbox>
-    <hbox name="hb2"><text text="Icon:"/>="Icon: "/><text name="icontxt"/></hbox>
+    <hbox name="hb2"><text text="Icon:"/>="Icon: "/></hbox>
     <hbox name="hb3"><text text="Note: "/><text name="notetxt"/></hbox>
     <hbox name="hb4"><text text="Summary: "/><text name="summarytxt"/></hbox>
     <hbox name="hb5"><text text="Resource: "/><text name="resrctxt"/></hbox>

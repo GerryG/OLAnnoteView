@@ -28,22 +28,20 @@ function find_el(nodes, parent, newnode=null, element='card', deep=0) {
         Debug.debug("Found search element:%s[%s,%s] %w", t, elemName, name, subNode)
         if (name) {
           if (children) {
-            var content = ''
+            var nocont=false
             for (var x=0; x<children.length; x++) {
-              var subcont = children[x].serialize()
-              if (subcont.indexOf('<no_card>')>=0) {
-                content = null
-Debug.debug("NoCard field[%s, %s] %s", name, elemName, content)
-break }
-              content = content+subcont
+              var child = children[x]
+              if (child.nodeType == lz.DataElement.ELEMENT_NODE &&
+                  child.nodeName == 'no_card')
+                { nocont=true; break }
+//Debug.debug("NoCard field[%s, %s] %s", name, elemName, content)
             }
-            if (!elemName) {elemName='nil' }
-            if (content != null) {
-              newnode.setAttribute(name, content)
-              Debug.debug("Store field[%s, %s] %s", name, elemName, content)
-            } else {
+            if (nocont) {
               //newnode[name] = 'Missing'
-              Debug.debug("Missing field[%s, %s] %s", name, elemName, content)
+              Debug.debug("Missing field[%s, %s] %s", name, elemName, children)
+            } else {
+              newnode.setAttribute(name, children)
+              Debug.debug("Store field[%s, %s] %s", name, elemName, children)
             }
           }
           continue
