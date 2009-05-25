@@ -4,8 +4,12 @@
 <library>
   <!-- Data definitions -->
   <dataset name="httpwagn" request="true"
-           src="http://74.0.57.155:3000/xmlcard/AIR"
-           ondata="find_el(httpwagn.childNodes)"/>
+           src="http://74.0.57.155:3000/xmlcard/AIR">
+    <handler name="ondata">
+      find_el(httpwagn.childNodes)
+      Debug.debug("Data: %s %w", noteSet.serialize(), noteSet)
+    </handler>
+  </dataset>
   <dataset name="noteSet" trimwhitespace="true"><nodes/></dataset>
   <datapointer name="notes" xpath="noteSet:/nodes[1]" rerunxpath="true"/>
   <script src="./getnote.lzs"/>

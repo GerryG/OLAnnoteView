@@ -7,7 +7,7 @@
   <class name="cardview" extends="vbox">
     <simplelayout/>
     <hbox><text text="NodeName: "/><text datapath="./name/text()"/></hbox>
-    <hbox><text text="Icon: "/><text datapath="./icon/text()"/></hbox>
+    <hbox><text text="Icon:"/>="Icon: "/><text datapath="./icon/img/@src"/></hbox>
     <hbox><text text="Note: "/><text datapath="./note/text()"/></hbox>
     <hbox><text text="Summary: "/><text datapath="./summary/text()"/></hbox>
     <hbox><text text="Resource: "/><text datapath="./resrc/text()"/></hbox>
