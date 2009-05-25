@@ -20,6 +20,7 @@ Debug.debug("oninit cardview")
     <handler name="onsummary"> hb4.summarytxt.setText(summary) </handler>
     <handler name="onicon">
        var nn = new lz.text(hb2, icon)
+       nn.setAttribute('multiline', 'true')
 Debug.debug("seticon: %w %s\nNN:%w", hb2.subviews, icon, nn)
     </handler>
     <handler name="onlist"> hb6.listtxt.setText(list) </handler>
