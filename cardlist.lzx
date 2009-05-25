@@ -6,12 +6,11 @@
   <dataset name="httpwagn" request="true"
            src="http://74.0.57.155:3000/xmlcard/AIR">
     <handler name="ondata">
-      find_el(httpwagn.childNodes)
-      Debug.debug("Data: %s %w", noteSet.serialize(), noteSet)
+      find_el(httpwagn.childNodes, listview)
     </handler>
   </dataset>
-  <dataset name="noteSet" trimwhitespace="true"><nodes/></dataset>
-  <datapointer name="notes" xpath="noteSet:/nodes[1]" rerunxpath="true"/>
+<!--  <dataset name="noteSet" trimwhitespace="true"><nodes/></dataset>
+  <datapointer name="notes" xpath="noteSet:/nodes[1]" rerunxpath="true"/> -->
   <script src="./getnote.lzs"/>
 
   <!-- Prompt for a card and fetch it on click -->
@@ -32,9 +31,9 @@
   <!-- Display this fetched list -->
   <class name="cardlist" extends="vbox">
     <simplelayout/>
-    <view datapath="noteSet:/nodes/annote">
+    <view id="listview">
       <simplelayout/>
-      <cardview/>
+      <!-- <cardview/> search adds cardviews now ... -->
     </view>
   </class>
 </library>

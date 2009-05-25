@@ -28,7 +28,7 @@
 
   <scrollview id="listView" headtext="List of Annotations Fetched" foottext="End of List"
               height="${canvas.height-this.y}" width="${canvas.width}">
-      <cardlist/>
+      <cardlist name="cdlst"/>
   </scrollview>
 
 </canvas>
