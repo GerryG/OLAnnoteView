@@ -13,9 +13,9 @@ function find_el(nodes, parent, newnode=null, element='card', deep=0) {
       if (subNode.hasAttr('key')) {
         // base card, create the node with the CardName
         var key = elemName
-        if (newnode) { Debug.debug("Second cardname found: %w", newnode) }
+        if (newnode) { Debug.error("Second cardname found: %w", newnode) }
         newnode = new lz.cardview(parent, {cardname: key})
-        Debug.debug("New card Name[%s] %w", key, newnode)
+        //Debug.debug("New card Name[%s] %w", key, newnode)
       } else if (nodeName == element) {
         // Top level card, create the node and put in the name
         switch(elemName) {
@@ -25,7 +25,7 @@ function find_el(nodes, parent, newnode=null, element='card', deep=0) {
         case "resource" : name='resrc'; break
         case "list" : name='list'; break
         }
-        Debug.debug("Found search element:%s[%s,%s] %w", t, elemName, name, subNode)
+        //Debug.debug("Found search element:%s[%s,%s] %w", t, elemName, name, subNode)
         if (name) {
           if (children) {
             var nocont=false
@@ -34,15 +34,14 @@ function find_el(nodes, parent, newnode=null, element='card', deep=0) {
               if (child.nodeType == lz.DataElement.ELEMENT_NODE &&
                   child.nodeName == 'no_card')
                 { nocont=true; break }
-//Debug.debug("NoCard field[%s, %s] %s", name, elemName, content)
             }
-            if (nocont) {
-              //newnode[name] = 'Missing'
-              Debug.debug("Missing field[%s, %s] %s", name, elemName, children)
-            } else {
+            if (!nocont && !newnode[name]) {
               newnode.setAttribute(name, children)
-              Debug.debug("Store field[%s, %s] %s", name, elemName, children)
             }
+//Debug.debug("Store field[%s, %s] %s", name, elemName, children)
+//else {
+//if (nocont){Debug.debug("Missing field[%s, %s] %s", name, elemName, children)}
+//else {Debug.debug("Duplicate field[%s, %s]", name, elemName)} }
           }
           continue
         }

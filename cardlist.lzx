@@ -9,21 +9,18 @@
       find_el(httpwagn.childNodes, listview)
     </handler>
   </dataset>
-<!--  <dataset name="noteSet" trimwhitespace="true"><nodes/></dataset>
-  <datapointer name="notes" xpath="noteSet:/nodes[1]" rerunxpath="true"/> -->
   <script src="./getnote.lzs"/>
 
   <!-- Prompt for a card and fetch it on click -->
   <class name="query" extends="hbox">
-    <text>Card Name: </text>
-    <inputtext name="cnameInput" width="100"/>
+    <text valign="bottom" >Card Name: </text>
+    <inputtext valign="bottom"  name="cnameInput" width="100"/>
     <button name="getbutton">Get Card
       <handler name="onclick">
-        Debug.debug("Get: %s", parent.cnameInput.getText)
+//Debug.debug("Get[%s] %s", parent.cnameInput.getText, httpwagn.src)
         httpwagn.src = "http://74.0.57.155:3000/xmlcard/" +
                        parent.cnameInput.getText()
         httpwagn.doRequest()
-        //Debug.debug("Onclick, fetch %s", httpwagn.src)
       </handler>
     </button>
   </class>

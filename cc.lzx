@@ -18,7 +18,7 @@
   <scrollview height="${canvas.height-this.y}" width="${canvas.width}">
    <simplelayout/>
     <text><u><b>foo</b></u></text>
-    <text multiline="true" width="100%" height="100%"><img src="http://74.0.57.155:3000/card_images/0000/0103/GerryGleasonChar_medium.jpg" alt="Nice picture"/></text>
+    <image src="http://74.0.57.155:3000/card_images/0000/0103/GerryGleasonChar_medium.jpg"/>
     <text>baz</text>
     <text>more text to put out this is a lot of text ...</text>
     <text>waldo</text>
