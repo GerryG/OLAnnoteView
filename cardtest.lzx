@@ -8,7 +8,7 @@
 <!--=======================================================================-->
 
 <canvas width="600" height="400" proxied="false" title="OpenLaszlo and AIR"
-  bgcolor="#e555e5" onwidth="listView.onwidth.sendEvent()" onheight="listView.onheight.sendEvent()">
+  bgcolor="#e5f5e5" onwidth="listView.onwidth.sendEvent()" onheight="listView.onheight.sendEvent()">
 
   <!-- for stand alone deploy ... -->
   <attribute name="sendinglc" value="$once{new LocalConnection()}" />

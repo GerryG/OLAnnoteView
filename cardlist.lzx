@@ -4,7 +4,7 @@
 <library>
   <!-- Data definitions -->
   <dataset name="httpwagn" request="true"
-           src="http://74.0.57.155:3000/xmlcard/AIR">
+           src="http://74.0.57.155:3000/xmlcard/AnnoteCard">
     <handler name="ondata">
       find_el(httpwagn.childNodes, listview)
     </handler>

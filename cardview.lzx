@@ -2,44 +2,64 @@
 <!-- View an annotation card -->
 
 <library>
-
   <include href="base/image.lzx"/>
+
   <!-- An Annotation View -->
   <class name="cardview" extends="vbox" oninit="oncardname.sendEvent()">
+
     <attribute name="cardname" type="string"/>
     <attribute name="resrc" type="string"/>
     <attribute name="note" type="string"/>
     <attribute name="summary" type="string"/>
     <attribute name="icon"/>
     <attribute name="list"/>
-    <handler name="oncardname"> hbname.nametxt.setAttribute('text',cardname) </handler>
-    <handler name="onresrc"> hbrsrc.resrctxt.setAttribute('text',resrc) </handler>
-    <handler name="onnote"> hbnote.notetxt.setAttribute('text',note) </handler>
-    <handler name="onsummary"> hbsumm.summtxt.setAttribute('text',summary) </handler>
-    <handler name="onicon">
-       //var swas = hbicon.v
-       //if (swas.hasProperty('i') { swas = swas.i }
-       //if (!hbicon.v.i) {
-         var hpre = httpwagn.src
-         var x = hpre.indexOf("http://") >=0
-         if (x >=0) {
-           var st = hpre.indexOf('/', x+7)
-           if (st >= 0) { hpre = hpre.substr(0,st) }
-         }
-         var nn = hpre+icon[0].attributes['src']
-         new lz.image(hbicon.v, {'name': 'i', 'src': nn})
-//Debug.debug("seticon: %s %w %s, %d:%d", nn, httpwagn, hpre, x, st)
-       //} else {
-//Debug.debug("Icon exists: %w", hbicon.v.i)
-       //}
-    </handler>
-    <handler name="onlist"> hblist.listtxt.setAttribute('text',list) </handler>
+
+    <handler name="oncardname"> vb.hbn.nametxt.setAttribute('text',cardname) </handler>
+    <handler name="onresrc"> vb.hbrsrc.resrctxt.setAttribute('text',resrc) </handler>
+    <handler name="onnote"> vb.hbn.notetxt.setAttribute('text',note) </handler>
+    <handler name="onsummary"> vb.hbicsum.summ.summtxt.setAttribute('text',summary) </handler>
+    <handler name="onicon">vb.hbicsum.vicn.setAttribute('icon', icon)</handler>
+    <handler name="onlist">vb.hblist.listtxt.setAttribute('text',list)</handler>
+
     <simplelayout/>
-    <hbox name="hbname"><text text="NodeName: "/><text name="nametxt"/></hbox>
-    <hbox name="hbicon"><view name="v"/></hbox>
-    <hbox name="hbnote"><text text="Note: "/><text name="notetxt"/></hbox>
-    <hbox name="hbsumm"><text text="Summary: "/><text name="summtxt"/></hbox>
-    <hbox name="hbrsrc"><text text="Resource: "/><text name="resrctxt"/></hbox>
-    <hbox name="hblist"><text text="List: "/><text name="listtxt"/></hbox>
+    <vbox name="vb" spacing="5">
+      <hbox name="hbn" spacing="5">
+        <text text="Card: "/>
+        <inputtext name="nametxt"/>
+        <text text="::"/>
+        <inputtext name="notetxt"/>
+      </hbox>
+      <hbox name="hbicsum" clip="true" spacing="5">
+        <icon name="vicn"/>
+        <summary name="summ" height="${parent.vicn.height}"
+                 width="${canvas.width-parent.vicn.width}"/>
+      </hbox>
+      <hbox name="hbrsrc" spacing="5">
+        <text text="Resource:"/>
+        <inputtext name="resrctxt"/>
+      </hbox>
+      <hbox name="hblist" spacing="5">
+        <text text="List: "/>
+        <text name="listtxt"/>
+      </hbox>
+    </vbox>
+  </class>
+
+  <class name="icon">
+    <attribute name="icon"/>
+    <handler name="onicon">
+       var hpre = httpwagn.src
+       var x = hpre.indexOf("http://") >=0
+       if (x >=0) {
+         var st = hpre.indexOf('/', x+7)
+         if (st >= 0) { hpre = hpre.substr(0,st) }
+       }
+//Debug.debug("seticon: %w %s", icon, hpre)
+       new lz.image(this, {'src': hpre+icon[0].attributes['src']})
+    </handler>
+  </class>
+
+  <class name="summary" defaultplacement="summtxt" clip="true">
+    <inputtext name="summtxt" multiline="true" width="100%"/>
   </class>
 </library>
