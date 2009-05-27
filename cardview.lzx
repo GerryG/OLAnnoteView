@@ -9,14 +9,14 @@
   <class name="cardview" extends="vbox" oninit="oncardname.sendEvent()">
 
     <attribute name="cardname" type="string"/>
-    <attribute name="resrc" type="string"/>
+    <attribute name="rsrc" type="string"/>
     <attribute name="note" type="string"/>
     <attribute name="summary" type="string"/>
     <attribute name="icon"/>
     <attribute name="list"/>
 
     <handler name="oncardname"> vb.hbn.nametxt.setAttribute('text',cardname) </handler>
-    <handler name="onresrc"> vb.hbrsrc.resrctxt.setAttribute('text',resrc) </handler>
+    <handler name="onrsrc"> vb.hbrsrc.rsrctxt.setAttribute('text',rsrc.href) </handler>
     <handler name="onnote"> vb.hbn.notetxt.setAttribute('text',note) </handler>
     <handler name="onsummary"> vb.hbicsum.summ.summtxt.setAttribute('text',summary) </handler>
     <handler name="onicon">vb.hbicsum.vicn.setAttribute('icon',icon)</handler>
@@ -27,31 +27,21 @@
       <hbox name="hbn" spacing="5">
         <text text="Card: "/>
         <inputtext name="nametxt"/>
-        <text text="-"/>
+        <text text="--"/>
         <inputtext name="notetxt"/>
       </hbox>
       <hbox name="hbicsum" clip="true" spacing="5">
         <icon name="vicn"/>
         <summary name="summ" height="${parent.vicn.height}"
-                 width="${canvas.width-parent.vicn.width}">
+                 width="${canvas.width-parent.vicn.width-20}">
         </summary>
       </hbox>
       <hbox name="hbrsrc" spacing="5">
-        <text text="Resource:"/>
-        <inputtext name="resrctxt"/>
+        <text name="rpr" text="Resource:" visible="false"/>
+        <inputtext name="rsrctxt" ondata="parent.rpr.setAttribute('visible', 'true')"/>
       </hbox>
-      <linklist name="linklist"/>
+      <linklist name="linklist" visible="false"/>
     </vbox>
-  </class>
-
-  <class name="linklist" extends="hbox">
-    <attribute name="list"/>
-    <handler name="onlist">
-      this.listtxt.setAttribute('text',list)
-    </handler>
-
-    <text text="List: "/>
-    <text name="listtxt"/>
   </class>
 
   <class name="icon">
@@ -63,23 +53,38 @@
          var st = hpre.indexOf('/', x+7)
          if (st >= 0) { hpre = hpre.substr(0,st) }
        }
-Debug.debug("seticon: %w %s", icon, hpre)
        new lz.image(this, {'src': hpre+icon[0].attributes['src']})
-      ]]>
-    </handler>
+    ]]></handler>
   </class>
 
   <class name="summary" headtext="" foottext="" defaultplacement="summtxt"
          widthfield="${summtxt}" extends="scrollview">
 
-    <handler name="onheight">
-        this.onheight.sendEvent()
-Debug.debug("H1:%w %s", this, this.height)
-    </handler>
-    <handler name="onwidth">
-      this.summtxt.setAttribute('width', this.width)
-Debug.debug("W1:%w %s", this, this.width)
-    </handler>
     <inputtext name="summtxt" valign="top" multiline="true"/>
+  </class>
+
+  <class name="linklist" extends="hbox" >
+    <attribute name="list" value="null"/>
+    <handler name="onlist">
+      this.setAttribute('visible', 'true')
+      this.lpr.setAttribute('visible', 'true')
+      this.lv.setAttribute('nodes',list)
+    </handler>
+
+    <text name="lpr" text="List:" visible="false"/>
+    <replicator name="lv">
+      <linkbutton/>
+    </replicator>
+  </class>
+
+  <class name="linkbutton" text="$path{'cardref[text]'}" extends="button">
+    <attribute name="target"/>
+    <handler name="onclick">
+//Debug.debug("Click, fetch(%w)\nThis %w", target, this)
+      canvas.getCard(target)
+    </handler>
+    <handler name="ontext">
+      this.setAttribute('target', this.datapath.p.getAttr('card') )
+    </handler>
   </class>
 </library>

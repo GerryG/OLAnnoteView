@@ -10,19 +10,16 @@
     </handler>
   </dataset>
   <script src="./getnote.lzs"/>
+  <method name="getCard" args="cardname">
+    httpwagn.src = "http://74.0.57.155:3000/xmlcard/" + cardname
+    httpwagn.doRequest()
+  </method>
 
   <!-- Prompt for a card and fetch it on click -->
   <class name="query" extends="hbox">
     <text valign="bottom" >Card Name: </text>
     <inputtext valign="bottom"  name="cnameInput" width="100"/>
-    <button name="getbutton">Get Card
-      <handler name="onclick">
-//Debug.debug("Get[%s] %s", parent.cnameInput.getText, httpwagn.src)
-        httpwagn.src = "http://74.0.57.155:3000/xmlcard/" +
-                       parent.cnameInput.getText()
-        httpwagn.doRequest()
-      </handler>
-    </button>
+    <button text="Get Card" onclick="canvas.getCard(parent.cnameInput.getText())"/>
   </class>
 
   <!-- Display this fetched list -->

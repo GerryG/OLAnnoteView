@@ -32,14 +32,8 @@
         else { var w = parent.width+1 }
         this.setAttribute('scrollwidth', w);
         var wfld = parent.widthfield
-        if (wfld) {
-          var itext = parent.oneview.content[wfld]
-          if (itext) {
-            itext.setAttribute("width", w)
-//Debug.debug("WWW:%s %w %w", w, wfld, itext)
-          }
-        }
-</handler>
+        if (wfld) { wfld.setAttribute("width", w) }
+      </handler>
       <handler name="oninit"> parent.onwidth.sendEvent(); </handler>
     </hscrollbar>
 
