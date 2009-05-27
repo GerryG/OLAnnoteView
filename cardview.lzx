@@ -16,13 +16,12 @@
     <attribute name="list"/>
 
     <handler name="oncardname"> vb.hbn.nametxt.setAttribute('text',cardname) </handler>
-    <handler name="onrsrc"> vb.hbrsrc.rsrctxt.setAttribute('text',rsrc.href) </handler>
+    <handler name="onrsrc"> vb.hbrsrc.rsrctxt.setAttribute('text', rsrc[0].attributes['href']) </handler>
     <handler name="onnote"> vb.hbn.notetxt.setAttribute('text',note) </handler>
     <handler name="onsummary"> vb.hbicsum.summ.summtxt.setAttribute('text',summary) </handler>
-    <handler name="onicon">vb.hbicsum.vicn.setAttribute('icon',icon)</handler>
-    <handler name="onlist">vb.linklist.setAttribute('list',list)</handler>
+    <handler name="onicon"> vb.hbicsum.vicn.setAttribute('icon',icon) </handler>
+    <handler name="onlist"> vb.linklist.setAttribute('list',list) </handler>
 
-    <simplelayout/>
     <vbox name="vb" spacing="5">
       <hbox name="hbn" spacing="5">
         <text text="Card: "/>
@@ -37,8 +36,8 @@
         </summary>
       </hbox>
       <hbox name="hbrsrc" spacing="5">
-        <text name="rpr" text="Resource:" visible="false"/>
-        <inputtext name="rsrctxt" ondata="parent.rpr.setAttribute('visible', 'true')"/>
+        <text name="rpr" text="Resource:" visible="${parent.rsrctxt.visible}"/>
+        <inputtext name="rsrctxt" visible="${this.text}"/>
       </hbox>
       <linklist name="linklist" visible="false"/>
     </vbox>
@@ -60,7 +59,7 @@
   <class name="summary" headtext="" foottext="" defaultplacement="summtxt"
          widthfield="${summtxt}" extends="scrollview">
 
-    <inputtext name="summtxt" valign="top" multiline="true"/>
+    <inputtext name="summtxt" valign="top" multiline="true" onheight="parent.onheight"/>
   </class>
 
   <class name="linklist" extends="hbox" >

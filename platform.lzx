@@ -1,0 +1,11 @@
+<include>
+  <!-- for stand alone deploy ... -->
+  <switch><when runtime="dhtml"/>
+  <otherwise>
+    <attribute name="sendinglc" value="$once{new LocalConnection()}" />
+    <attribute name="lcname" value="ol_to_flex_connection" type="string" />
+
+    <method name="close"> sendinglc.send(lcname, "closeApplication"); </method>
+  </otherwise>
+  </switch>
+</include>

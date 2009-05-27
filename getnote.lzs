@@ -22,7 +22,7 @@ function find_el(nodes, parent, newnode=null, element='card', deep=0) {
         case "icon" : name='icon'; break
         case "description" : name='summary'; break
         case "statement" : name='note'; break
-        case "resource" : name='resrc'; break
+        case "resource" : name='rsrc'; break
         case "list" : name='list'; break
         }
         //Debug.debug("Found search element:%s[%s,%s] %w", t, elemName, name, subNode)
