@@ -41,11 +41,10 @@ if [ ! -d ${OPENLASZLO_WORKDIR} ] ; then
   mkdir ${OPENLASZLO_WORKDIR}
 fi
 if [ ! -e "${OPENLASZLO_WORKDIR}/cardtest.lzx" ] ; then
-  ln -s ${SRCDIR}/cardtest.lzx ${OPENLASZLO_WORKDIR}
-  ln -s ${SRCDIR}/cardlist.lzx ${OPENLASZLO_WORKDIR}
-  ln -s ${SRCDIR}/cardview.lzx ${OPENLASZLO_WORKDIR}
-  ln -s ${SRCDIR}/getnote.lzs ${OPENLASZLO_WORKDIR}
-  ln -s ${SRCDIR}/scroll.lzx ${OPENLASZLO_WORKDIR}
+  for i in *.lz[sx] ; do
+    echo ln -s ${SRCDIR}/${i} ${OPENLASZLO_WORKDIR}
+    ln -s ${SRCDIR}/${i} ${OPENLASZLO_WORKDIR}
+  done
 fi
 
 OL_RUNTIME_OPTION=swf7
