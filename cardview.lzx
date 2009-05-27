@@ -3,6 +3,7 @@
 
 <library>
   <include href="base/image.lzx"/>
+  <include href="scroll.lzx"/>
 
   <!-- An Annotation View -->
   <class name="cardview" extends="vbox" oninit="oncardname.sendEvent()">
@@ -18,48 +19,67 @@
     <handler name="onresrc"> vb.hbrsrc.resrctxt.setAttribute('text',resrc) </handler>
     <handler name="onnote"> vb.hbn.notetxt.setAttribute('text',note) </handler>
     <handler name="onsummary"> vb.hbicsum.summ.summtxt.setAttribute('text',summary) </handler>
-    <handler name="onicon">vb.hbicsum.vicn.setAttribute('icon', icon)</handler>
-    <handler name="onlist">vb.hblist.listtxt.setAttribute('text',list)</handler>
+    <handler name="onicon">vb.hbicsum.vicn.setAttribute('icon',icon)</handler>
+    <handler name="onlist">vb.linklist.setAttribute('list',list)</handler>
 
     <simplelayout/>
     <vbox name="vb" spacing="5">
       <hbox name="hbn" spacing="5">
         <text text="Card: "/>
         <inputtext name="nametxt"/>
-        <text text="::"/>
+        <text text="-"/>
         <inputtext name="notetxt"/>
       </hbox>
       <hbox name="hbicsum" clip="true" spacing="5">
         <icon name="vicn"/>
         <summary name="summ" height="${parent.vicn.height}"
-                 width="${canvas.width-parent.vicn.width}"/>
+                 width="${canvas.width-parent.vicn.width}">
+        </summary>
       </hbox>
       <hbox name="hbrsrc" spacing="5">
         <text text="Resource:"/>
         <inputtext name="resrctxt"/>
       </hbox>
-      <hbox name="hblist" spacing="5">
-        <text text="List: "/>
-        <text name="listtxt"/>
-      </hbox>
+      <linklist name="linklist"/>
     </vbox>
+  </class>
+
+  <class name="linklist" extends="hbox">
+    <attribute name="list"/>
+    <handler name="onlist">
+      this.listtxt.setAttribute('text',list)
+    </handler>
+
+    <text text="List: "/>
+    <text name="listtxt"/>
   </class>
 
   <class name="icon">
     <attribute name="icon"/>
-    <handler name="onicon">
+    <handler name="onicon"><![CDATA[
        var hpre = httpwagn.src
-       var x = hpre.indexOf("http://") >=0
+       var x = hpre.indexOf("http://")
        if (x >=0) {
          var st = hpre.indexOf('/', x+7)
          if (st >= 0) { hpre = hpre.substr(0,st) }
        }
-//Debug.debug("seticon: %w %s", icon, hpre)
+Debug.debug("seticon: %w %s", icon, hpre)
        new lz.image(this, {'src': hpre+icon[0].attributes['src']})
+      ]]>
     </handler>
   </class>
 
-  <class name="summary" defaultplacement="summtxt" clip="true">
-    <inputtext name="summtxt" multiline="true" width="100%"/>
+  <class name="summary" headtext="" foottext="" defaultplacement="summtxt"
+         widthfield="${summtxt}" extends="scrollview">
+
+    <handler name="onheight">
+        this.onheight.sendEvent()
+Debug.debug("H1:%w %s", this, this.height)
+    </handler>
+    <handler name="onwidth">
+      this.summtxt.setAttribute('width', this.width)
+Debug.debug("W1:%w %s", this, this.width)
+    </handler>
+    <inputtext name="summtxt" valign="top" multiline="true"/>
   </class>
 </library>

@@ -2,6 +2,7 @@
   <class name="scrollview" defaultplacement="content" clip="true" focusable="true">
     <attribute type="string" name="headtext" value="Your data:"/>
     <attribute type="string" name="foottext" value="End of data"/>
+    <attribute name="widthfield" value="null"/>
     <view name="oneview">
       <simplelayout/>
       <text text="${parent.parent.headtext}"/>
@@ -30,7 +31,15 @@
         if (parent.vscroll.visible == true) { var w = parent.width-15; }
         else { var w = parent.width+1 }
         this.setAttribute('scrollwidth', w);
-      </handler>
+        var wfld = parent.widthfield
+        if (wfld) {
+          var itext = parent.oneview.content[wfld]
+          if (itext) {
+            itext.setAttribute("width", w)
+//Debug.debug("WWW:%s %w %w", w, wfld, itext)
+          }
+        }
+</handler>
       <handler name="oninit"> parent.onwidth.sendEvent(); </handler>
     </hscrollbar>
 
@@ -41,9 +50,6 @@
       <handler name="onmouseover"> lz.Cursor.showHandCursor(false) </handler>
       <handler name="onmouseout"> lz.Cursor.showHandCursor(true) </handler>
     </view>
-
-    <!-- <scrollbar name="sbx" axis="x"/>
-    <scrollbar name="sby" visible="true"/> -->
   </class>
 </library>
 
