@@ -16,7 +16,7 @@
     <attribute name="list"/>
 
     <handler name="oncardname"> vb.hbn.nametxt.setAttribute('text',cardname) </handler>
-    <handler name="onrsrc"> vb.hbrsrc.rsrctxt.setAttribute('text', rsrc[0].attributes['href']) </handler>
+    <handler name="onrsrc"> vb.hbrsrc.rsrctxt.setAttribute('text', rsrc[0].getAttr('href')) </handler>
     <handler name="onnote"> vb.hbn.notetxt.setAttribute('text',note) </handler>
     <handler name="onsummary"> vb.hbicsum.summ.summtxt.setAttribute('text',summary) </handler>
     <handler name="onicon"> vb.hbicsum.vicn.setAttribute('icon',icon) </handler>
@@ -52,7 +52,7 @@
          var st = hpre.indexOf('/', x+7)
          if (st >= 0) { hpre = hpre.substr(0,st) }
        }
-       new lz.image(this, {'src': hpre+icon[0].attributes['src']})
+       new lz.image(this, {'src': hpre+icon[0].getAttr('src')})
     ]]></handler>
   </class>
 

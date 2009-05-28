@@ -13,9 +13,15 @@ function find_el(nodes, parent, newnode=null, element='card', deep=0) {
       if (subNode.hasAttr('key')) {
         // base card, create the node with the CardName
         var key = elemName
+        var type
+        if (subNode.hasAttr("type") && (type = subNode.getAttr('type')) == 'Pointer') {
+          fetch_cards(children)
+          return
+        }
+Debug.debug("Node type: %s", type)
         if (newnode) { Debug.error("Second cardname found: %w", newnode) }
         newnode = new lz.cardview(parent, {cardname: key})
-        //Debug.debug("New card Name[%s] %w", key, newnode)
+Debug.debug("New card Name[%s] %w", key, newnode)
       } else if (nodeName == element) {
         // Top level card, create the node and put in the name
         switch(elemName) {
@@ -48,5 +54,25 @@ function find_el(nodes, parent, newnode=null, element='card', deep=0) {
       }
       if (children) { find_el(children, parent, newnode, element, deep+1) }
     }
+  }
+}
+
+function fetch_cards(nodes) { //, parent, newnode=null, element='card', deep=0) 
+Debug.debug("Pointer fetches: %w", nodes)
+  for (var idx=0; idx<nodes.length; idx++) {
+    var subNode = nodes[idx]
+    var t = subNode.nodeType
+    var nodeName = subNode.nodeName
+    var name = ''
+    //Debug.debug("Iter[%s,%s] t[%s] %w", idx, nodeName, t, subNode)
+    if (t == lz.DataElement.ELEMENT_NODE) {
+      if (nodeName == 'cardref') {
+        var cardname = subNode.getAttr('key')
+Debug.debug("getCard(%s)", cardname)
+        canvas.getCard(cardname)
+      }
+else { Debug.debug("Not cardref %s", nodeName) }
+    }
+else { Debug.debug("Text? %s %s", subNode.getText()) }
   }
 }
