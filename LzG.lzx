@@ -1,0 +1,197 @@
+<canvas height="800"  width="640" debug="true">
+
+	<class name="LazsloGears" >
+		<method name="addStudent" args="a,b,c,d">
+		var query = "INSERT INTO AddStudent VALUES("+a+", '"+b+"', '"+c+"', '"+d+"')";
+		Debug.write(query);
+	
+		var ret = flash.external.ExternalInterface.call("handleStudentEntry", a,b,c,d);
+		return ret;
+		</method>
+		
+		<method name="getStudents">
+			var ret = flash.external.ExternalInterface.call("displayStudents");
+			return ret;
+		</method>
+	
+		<method name="removeAllStudents">
+			var ret = flash.external.ExternalInterface.call("dropTable");
+			return ret;
+		</method>
+		
+		<method name="deleteStudent" args = "a">
+			var ret = flash.external.ExternalInterface.call("handleStudentRemoval", a);
+			return ret;
+		</method>
+		
+		<method name="updateStudent" args = "a,b">
+			var ret = flash.external.ExternalInterface.call("handleUpdateStudent", a,b);
+			return ret;
+		</method>
+		
+	</class>
+
+
+	<LazsloGears name="LG"/>
+
+	<dataset id="stdDS" name="StudentData">
+		<Students></Students>
+	</dataset>
+	
+	<dataset id="localDS" name="LocalStudentData"/>
+	
+	
+	<view id="v1"  name="vTop" width="100%" height="100%">
+		
+		<method name="displayStudents">
+			var ret = LG.getStudents();
+			Debug.write("ret:" + ret);
+			<![CDATA[
+	
+				//erase LocalData
+				LocalStudentData.setChildNodes([]);
+	
+				// get datapointer
+				dp = LocalStudentData.getPointer();
+	
+				// building dataset LocalData
+				if ((typeof ret != "undefined") && (ret.length > 0)){
+					dp.addNode("Students",null,null);
+					dp.selectChild();
+					for (row=0; row<ret.length; row+=5){
+						dp.addNode("Student",null,{'id':ret[row], 'name':ret[row+1], 'address':ret[row+2], 'course':ret[row+3], 'timestamp':ret[row+4]});
+					}
+				}						
+	
+			]]>
+		</method>
+		
+		<text onclick="v2.setVisible(!v2.visible);">Enter New Student...</text>
+		
+		<simplelayout spacing="5" inset="20"/>
+		<view id="v2" name="vInput" visible="false" bgcolor="silver" width="40%" height="25%" datapath="new:/Students/">
+        
+			<simplelayout spacing="10" inset="20"/>
+			<vbox name = "vb_1">
+				<hbox name= "hb_1">
+					<text yoffset="-2">Enter Id:</text>
+					<edittext id="stdId" text="Id" datapath="@id"></edittext>
+				</hbox>
+			</vbox>  
+			<vbox>
+				<hbox>
+					<text yoffset="-2">Enter Name:</text>
+					<edittext id="stdName" text="Name" datapath="@name"></edittext>
+				</hbox>
+			</vbox>
+			<vbox>
+				<hbox>
+					<text yoffset="-2">Enter Address:</text>
+					<edittext id="stdAdd" text="Address" datapath="@address"></edittext>
+				</hbox>
+			</vbox>
+			<vbox>
+				<hbox>
+					<text yoffset="-2">Enter Course:</text>
+					<edittext id="stdCourse" text="Course" datapath="@course"></edittext>
+				</hbox>
+			</vbox>
+			<vbox>
+        	
+				<hbox>
+					<button>Add Student
+						<method event="onclick">
+						var vid = stdId.getText();
+						var vname = stdName.getText();
+						var vaddr = stdAdd.getText();
+						var vcourse = stdCourse.getText();
+						
+						Debug.write("id: ", vid);
+						var ret = LG.addStudent(vid,vname,vaddr,vcourse);
+						Debug.write(ret);
+						
+						v1.displayStudents();
+						</method>
+					</button>
+		        
+				</hbox>
+			</vbox>
+		</view>
+
+		<view>
+			<hbox>
+			<button>Get Students
+				<method event="onclick">
+					v1.displayStudents();
+					v3.setVisible(true);
+				</method>
+			</button>
+			
+			<button>Remove Locally Stored Data
+				<method event="onclick">
+					LG.removeAllStudents();
+					//v3.setVisible(false);
+				</method>
+			</button>
+			
+			</hbox>
+		</view>
+		
+		<view id = "v3"  name="vGrid" height="30%"  width="40%" visible="false">
+			
+			<vbox>
+				<datapath xpath="LocalStudentData:/Students"/>
+				<grid id="StdGrid" sizetoheader="false">
+					<gridtext editable ="false" datapath="@id">Id </gridtext>
+					<gridtext editable ="false" datapath="@name">Name </gridtext>
+					<gridtext editable ="false" datapath="@address"> Address </gridtext>
+					<gridtext editable ="true" datapath="@course"> Course </gridtext>
+					<gridtext editable ="false" datapath="@timestamp"> Entry Time </gridtext>
+					
+					<hbox>
+						<button>Update Student
+							<method event="onclick">
+									var dp = LocalStudentData.getPointer();
+					                //parent.parent.datapath.updateData();
+					                
+					                var lzp = StdGrid.getSelection();
+					                var lz = lzp[0];
+									var x = lz.p.attributes.id;
+									var y = lz.p.attributes.course;
+									Debug.write(x);
+					                var ret = LG.updateStudent(x,y);
+									
+							</method>
+						</button>
+						<button>Delete Student
+							<method event="onclick">
+				        		var lzp = StdGrid.getSelection();
+				        		
+				        		if (lzp==null)
+				        		{return;}
+				        		else{
+							<![CDATA[
+
+								for ( var i=0; i<lzp.length; i++ ){ 
+									var lz = lzp[i];
+									var x = lz.p.attributes.id;
+									Debug.write("Id: " + x);
+									
+									var ret = LG.deleteStudent(x);
+									Debug.write("del ret: "+ ret);
+									lz.deleteNode();
+									
+								}
+							]]>
+				        		}
+							</method>
+						</button>
+					</hbox>
+				</grid>
+			</vbox>
+		</view>
+
+	</view>
+</canvas>
+			
+			

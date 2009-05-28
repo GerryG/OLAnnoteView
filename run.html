@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<!--  Google Gears Script -->
+<script type="text/javascript" src="gears_init.js"></script>
+
+<!-- OpenLaszlo Google Gears Script -->
+<script type="text/javascript" src="Lazslo_Gears.js"></script>
+
+
+<!-- OpenLaszlo Embed Script -->
+<!--<script src="http://localhost:8080/lps-4.0.2/lps/includes/embed-compressed.js" type="text/javascript"></script>-->
+<script type="text/javascript" src="embed-compressed.js"></script>
+
+
+<title>Working With OpenLazslo and GoogleGears</title>
+
+</head>
+
+<body onload="init()" onunload="closedb()">
+
+<!-- OpenLaszlo Application-->
+<script type="text/javascript">
+	//Lz.swfEmbed({url: 'http://localhost:8080/lps-4.0.2/my-apps/LazsloOnGears/LzG.lzx?lzt=swf&debug=true&lzr=swf8', bgcolor: '#ffffff', width: '800', height: '640', id: 'lzapp', accessible: 'false'});
+	Lz.swfEmbed({url: 'LzG.lzx.lzr=swf8.swf?&lzproxied=false', bgcolor: '#ffffff', width: '640', height: '800', id: 'lzapp', accessible: 'false'});
+</script>
+
+</body>
+
+</html>
