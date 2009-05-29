@@ -6,41 +6,113 @@
   <include href="scroll.lzx"/>
 
   <!-- An Annotation View -->
-  <class name="cardview" extends="vbox" oninit="oncardname.sendEvent()">
+  <class name="cardview" extends="vbox">
 
-    <attribute name="cardname" type="string"/>
-    <attribute name="rsrc" type="string"/>
-    <attribute name="note" type="string"/>
-    <attribute name="summary" type="string"/>
+    <attribute name="card"/>
+    <attribute name="cardname"/>
+    <attribute name="rsrc"/>
+    <attribute name="note"/>
+    <attribute name="summary"/>
     <attribute name="icon"/>
     <attribute name="list"/>
 
-    <handler name="oncardname"> vb.hbn.nametxt.setAttribute('text',cardname) </handler>
-    <handler name="onrsrc"> vb.hbrsrc.rsrctxt.setAttribute('text', rsrc[0].getAttr('href')) </handler>
-    <handler name="onnote"> vb.hbn.notetxt.setAttribute('text',note) </handler>
-    <handler name="onsummary"> vb.hbicsum.summ.summtxt.setAttribute('text',summary) </handler>
-    <handler name="onicon"> vb.hbicsum.vicn.setAttribute('icon',icon) </handler>
-    <handler name="onlist"> vb.linklist.setAttribute('list',list) </handler>
+    <method name="storeCard" args="">
+Debug.debug("storeCard Card before: %w", card)
+//Debug.debug("storeCard: %w\nCN:%s R:%s N:%s S:%s I:%s L:%s", this, trans_cardname, trans_rsrc, trans_note, trans_summary, trans_icon, trans_list)
+//Debug.debug("Locations CN:%w\nR:%w\nN:%w\nS:%w\nI:%w\nL:%w", cardname, rsrc, note, summary, icon, list)
+//Debug.debug("Data CN:%s\nR:%s\nN:%s\nS:%s\nI:%s\nL:%w", cardname.text, rsrc.text, note.text, summary.text, icon.icon, list.list)
+//Debug.debug("Card: %s, %w", card.getAttr('name'), card)
 
-    <vbox name="vb" spacing="5">
-      <hbox name="hbn" spacing="5">
-        <text text="Card: "/>
-        <inputtext name="nametxt"/>
-        <text text="--"/>
-        <inputtext name="notetxt"/>
-      </hbox>
-      <hbox name="hbicsum" clip="true" spacing="5">
-        <icon name="vicn"/>
-        <summary name="summ" height="${parent.vicn.height}"
-                 width="${canvas.width-parent.vicn.width-20}">
-        </summary>
-      </hbox>
-      <hbox name="hbrsrc" spacing="5">
-        <text name="rpr" text="Resource:" visible="${parent.rsrctxt.visible}"/>
-        <inputtext name="rsrctxt" visible="${this.text}"/>
-      </hbox>
-      <linklist name="linklist" visible="false"/>
-    </vbox>
+      //name
+      if (src_cardname != cardname.text) {
+//Debug.debug("Rename not supported yet (ignoring) %s :: %s", src_cardname, cardname.text)
+      }
+Debug.debug( "Source info: Rsrc: %s, %w\nNote: %s, %w\nSumm: %s, %w",
+   src_rsrc[0].getAttr('href'), src_rsrc[0], src_note[0].data,
+   src_note[0], src_summary[0].data, src_summary[0] )
+
+      //rsrc
+      src_rsrc[0].setAttr('href', rsrc.text)
+      if (src_note.length > 1) {
+//Debug.debug("Extra children rsrc %d", src_note.length)
+      }
+      //note
+      src_note[0].setAttribute('data', note.text)
+      if (src_note.length > 1) {
+//Debug.debug("Clear children note %d", src_note.length)
+        for (var iidx = 1; iidx &lt; src_note.length; iidx++) {
+          src_note[iidx].setAttribute('data', '')
+        }
+      }
+      //summary
+      src_summary[0].setAttribute('data', summary.text)
+      if (src_summary.length > 1) {
+//Debug.debug("Clear children summary %d", src_summary.length)
+        for (var iidx = 1; iidx &lt; src_summary.length; iidx++) {
+          src_summary[iidx].setAttribute('data', '')
+        }
+      }
+      //icon (no icon edit/upload widget yet)
+      //src_icon = icon.icon
+      //list (no list edit yet either)
+      //src_list = icon.list
+Debug.debug( "Source after: Rsrc: %s, %w\nNote: %s, %w\nSumm: %s, %w",
+   src_rsrc[0].getAttr('href'), src_rsrc[0], src_note[0].data,
+   src_note[0], src_summary[0].data, src_summary[0] )
+Debug.debug("storeCard Card after : %w", card)
+      // XML PUT card to httpwagn/BASE/card.getAttr('name')
+    </method>
+
+    <method name="setField" args="field, value">
+Debug.debug("Card: %s", card.getAttr('name'))
+       this.setAttribute("src_"+field, value)
+       this.setAttribute("trans_"+field, card.getAttr('name'))
+       switch(field) {
+       case "cardname":
+         hboxCard.itxtName.setAttribute('text',value)
+         this.setAttribute(field, hboxCard.itxtName)
+         break
+       case "rsrc":
+         hboxRsrc.itxtRsrc.setAttribute('text', value[0].getAttr('href'))
+         this.setAttribute(field, hboxRsrc.itxtRsrc)
+         break
+       case "note":
+         hboxCard.itxtNode.setAttribute('text',value)
+         this.setAttribute(field, hboxCard.itxtNode)
+         break
+       case "summary":
+         hboxIconSumm.summSumm.itxtSumm.setAttribute('text',value)
+         this.setAttribute(field, hboxIconSumm.summSumm.itxtSumm)
+         break
+       case "icon":
+         hboxIconSumm.iconIcon.setAttribute('icon',value)
+         this.setAttribute(field, hboxIconSumm.iconIcon)
+         break
+       case "list":
+         linkList.setAttribute('list',value)
+         this.setAttribute(field, linkList)
+         break
+       }
+    </method>
+
+    <hbox name="hboxCard" spacing="5">
+      <button text="Save" onclick="parent.parent.storeCard()"/>
+      <text text="Card: "/>
+      <inputtext name="itxtName"/>
+      <text text="--"/>
+      <inputtext name="itxtNode"/>
+    </hbox>
+    <hbox name="hboxIconSumm" clip="true" spacing="5">
+      <icon name="iconIcon"/>
+      <summary name="summSumm" height="${parent.iconIcon.height}"
+               width="${canvas.width-parent.iconIcon.width-20}">
+      </summary>
+    </hbox>
+    <hbox name="hboxRsrc" spacing="5">
+      <text text="Resource:" visible="${parent.itxtRsrc.visible}"/>
+      <inputtext name="itxtRsrc" visible="${this.text}"/>
+    </hbox>
+    <linklist name="linkList" visible="false"/>
   </class>
 
   <class name="icon">
@@ -56,34 +128,49 @@
     ]]></handler>
   </class>
 
-  <class name="summary" headtext="" foottext="" defaultplacement="summtxt"
-         widthfield="${summtxt}" extends="scrollview">
+  <class name="summary" headtext="" foottext="" defaultplacement="itxtSumm"
+         widthfield="${itxtSumm}" extends="scrollview">
 
-    <inputtext name="summtxt" valign="top" multiline="true" onheight="parent.onheight"/>
+    <inputtext name="itxtSumm" valign="top" multiline="true" onheight="parent.onheight"/>
   </class>
 
   <class name="linklist" extends="hbox" >
     <attribute name="list" value="null"/>
-    <handler name="onlist">
-      this.setAttribute('visible', 'true')
-      this.lpr.setAttribute('visible', 'true')
-      this.lv.setAttribute('nodes',list)
+    <attribute name="thisCardname" value="null"/>
+    <handler name="onthisCardname">
+      if (typeof thisCardname != 'undefined') {
+//Debug.debug(">>onthisCardname: %w %s", this.list, thisCardname)
+        this.loadlist.setAttribute('text', thisCardname )
+      }
     </handler>
 
-    <text name="lpr" text="List:" visible="false"/>
-    <replicator name="lv">
+    <handler name="onlist">
+//Debug.debug("linklist: %w %w", this, list)
+      this.setAttribute('thisCardname', parent.trans_list)
+      this.setAttribute('visible', 'true')
+      //this.lpr.setAttribute('visible', 'true')
+      this.repLink.setAttribute('nodes',list)
+    </handler>
+
+    <!-- <text name="lpr" text="List:" visible="false"/> -->
+    <linkbutton name="loadlist"/>
+    <replicator name="repLink">
       <linkbutton/>
     </replicator>
   </class>
 
   <class name="linkbutton" text="$path{'cardref[text]'}" extends="button">
     <attribute name="target"/>
-    <handler name="onclick">
-//Debug.debug("Click, fetch(%w)\nThis %w", target, this)
-      canvas.getCard(target)
-    </handler>
+    <handler name="onclick"> canvas.getCard(target) </handler>
     <handler name="ontext">
-      this.setAttribute('target', this.datapath.p.getAttr('card') )
+      var p=this.datapath.p
+      if (p != null) {
+        this.setAttribute('target', p.getAttr('card') )
+      } else {
+        this.setAttribute('target', this.text )
+        this.setAttribute('visible', 'true' )
+        this.setAttribute('text', "Load List" )
+      }
     </handler>
   </class>
 </library>
