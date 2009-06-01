@@ -6,7 +6,8 @@
   <include href="scroll.lzx"/>
 
   <!-- An Annotation View -->
-  <class name="cardview" extends="vbox">
+  <class name="cardview" extends="vbox"
+oninit="Debug.debug('init cardview')">
 
     <attribute name="card"/>
     <attribute name="cardname"/>
@@ -63,10 +64,11 @@ Debug.debug("storeCard Card after : %w", card)
       // XML PUT card to httpwagn/BASE/card.getAttr('name')
     </method>
 
-    <method name="setField" args="field, value">
-Debug.debug("Card: %s", card.getAttr('name'))
+    <method name="setField" args="field, thiscardname, node">
+//Debug.debug("Card: %s, F:%s T:%w N:%w", card.getAttr('name'), field, thiscardname, node)
        this.setAttribute("src_"+field, value)
-       this.setAttribute("trans_"+field, card.getAttr('name'))
+       var value = (field == 'cardname') ? node : node.childNodes
+       this.setAttribute("trans_"+field, thiscardname) // card.getAttr('name')
        switch(field) {
        case "cardname":
          hboxCard.itxtName.setAttribute('text',value)

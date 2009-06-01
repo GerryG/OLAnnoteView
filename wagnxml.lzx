@@ -1,0 +1,39 @@
+<library>
+  <script src="./getnote.lzs"/>
+
+  <!-- Data definitions -->
+  <dataset name="httpwagn" request="true"
+           src="http://74.0.57.155:3000/xmlcard/AnnoteCard">
+    <handler name="oninit"> httpwagn.queue = ['initial'] </handler>
+    <handler name="onerror">
+      var thiscard = httpwagn.queue.shift()
+      if (httpwagn.queue.length > 0) {
+        var nextcard = httpwagn.queue[0]
+//Debug.debug("Next fetch: %s, %s, %d", nextcard, thiscard, httpwagn.queue.length)
+        httpwagn.src = "http://74.0.57.155:3000/xmlcard/" + nextcard
+        httpwagn.doRequest()
+      }
+//Debug.debug("Error: %w, %s, %d", this, thiscard, httpwagn.queue.length)
+    </handler>
+    <handler name="ondata">
+      this.cnodes = httpwagn.childNodes
+      this.onerror.sendEvent()
+      find_el(this.cnodes, listview)
+    </handler>
+  </dataset>
+  <method name="getCard" args="cardname">
+    httpwagn.queue.push(cardname)
+//Debug.debug("Queue[%s] %d", cardname, httpwagn.queue.length)
+    if (httpwagn.queue.length &lt; 2) {
+      httpwagn.src = "http://74.0.57.155:3000/xmlcard/" + cardname
+      httpwagn.doRequest()
+    }
+  </method>
+
+  <!-- Prompt for a card and fetch it on click -->
+  <class name="query" extends="hbox">
+    <text valign="bottom" >Card Name: </text>
+    <inputtext valign="bottom"  name="cnameInput" width="100"/>
+    <button text="Get Card" onclick="canvas.getCard(parent.cnameInput.getText())"/>
+  </class>
+</library>

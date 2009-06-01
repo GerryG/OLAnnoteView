@@ -14,7 +14,7 @@
 
   <include href="cardlist.lzx"/>
   <include href="cardview.lzx"/>
-  <include href="scroll.lzx"/>
+  <include href="wagnxml.lzx"/>
   
   <vbox spacing="10">
     <query/>
