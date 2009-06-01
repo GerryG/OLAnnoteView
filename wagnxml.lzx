@@ -4,36 +4,43 @@
   <!-- Data definitions -->
   <dataset name="httpwagn" request="true"
            src="http://74.0.57.155:3000/xmlcard/AnnoteCard">
-    <handler name="oninit"> httpwagn.queue = ['initial'] </handler>
-    <handler name="onerror">
-      var thiscard = httpwagn.queue.shift()
-      if (httpwagn.queue.length > 0) {
-        var nextcard = httpwagn.queue[0]
-//Debug.debug("Next fetch: %s, %s, %d", nextcard, thiscard, httpwagn.queue.length)
-        httpwagn.src = "http://74.0.57.155:3000/xmlcard/" + nextcard
-        httpwagn.doRequest()
+    <attribute name="queue" value="['AnnoteCard']"/>
+
+    <!-- fetch are card by name -->
+    <method name="getCard" args="cardname">
+      queue.push(cardname)
+//Debug.debug("Queue[%s] %d", cardname, queue.length)
+      // One item (the new one) on queue, start the queue
+      if (queue.length &lt; 2) {
+        this.src = "http://74.0.57.155:3000/xmlcard/" + cardname
+        this.doRequest()
       }
-//Debug.debug("Error: %w, %s, %d", this, thiscard, httpwagn.queue.length)
+    </method>
+
+    <handler name="onerror">
+//Debug.debug("Error: %w, %s, %d", this, thiscard, queue.length)
+
+      // Dequeue current request and start a new one
+      var thiscard = queue.shift()
+      if (queue.length > 0) {
+        var nextcard = queue[0]
+//Debug.debug("Next fetch: %s, %s, %d", nextcard, thiscard, queue.length)
+        this.src = "http://74.0.57.155:3000/xmlcard/" + nextcard
+        this.doRequest()
+      }
     </handler>
+
     <handler name="ondata">
-      this.cnodes = httpwagn.childNodes
+      this.cnodes = this.childNodes
       this.onerror.sendEvent()
       find_el(this.cnodes, listview)
     </handler>
   </dataset>
-  <method name="getCard" args="cardname">
-    httpwagn.queue.push(cardname)
-//Debug.debug("Queue[%s] %d", cardname, httpwagn.queue.length)
-    if (httpwagn.queue.length &lt; 2) {
-      httpwagn.src = "http://74.0.57.155:3000/xmlcard/" + cardname
-      httpwagn.doRequest()
-    }
-  </method>
 
   <!-- Prompt for a card and fetch it on click -->
   <class name="query" extends="hbox">
     <text valign="bottom" >Card Name: </text>
     <inputtext valign="bottom"  name="cnameInput" width="100"/>
-    <button text="Get Card" onclick="canvas.getCard(parent.cnameInput.getText())"/>
+    <button text="Get Card" onclick="canvas.httpwagn.getCard(parent.cnameInput.getText())"/>
   </class>
 </library>

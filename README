@@ -7,6 +7,7 @@ cardtest.lzx    First test app, scrollable window to app in:
 cardlist.lzx    Data sources and a display class for query and cardlists
 getnote.lzs     Script code to search the returned XML, turn it into local XML
 cardview.lzx    View for a single card
+wagnxml.lzx     External request (Wagn cards) code
 cc.lzx          Simple test to validate app window part
 ./air/build.sh  Build as a AIR app (with 'test' as argument to run it locally)
 

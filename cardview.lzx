@@ -163,7 +163,7 @@ Debug.debug("storeCard Card after : %w", card)
 
   <class name="linkbutton" text="$path{'cardref[text]'}" extends="button">
     <attribute name="target"/>
-    <handler name="onclick"> canvas.getCard(target) </handler>
+    <handler name="onclick"> canvas.httpwagn.getCard(target) </handler>
     <handler name="ontext">
       var p=this.datapath.p
       if (p != null) {

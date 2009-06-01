@@ -78,7 +78,7 @@ function fetch_cards(nodes) {
         var cclass = subNode.getAttr('class')
         if (cclass == 'known-card') {
 //Debug.debug("getCard(%s) %w", cardname, subNode)
-          canvas.getCard(cardname)
+          canvas.httpwagn.getCard(cardname)
         }
 else { Debug.debug("Unknown?: %s", cclass) }
       }
