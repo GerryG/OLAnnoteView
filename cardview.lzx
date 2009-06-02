@@ -145,15 +145,11 @@ Debug.debug("storeCard Card after : %w", card)
     <inputtext name="itxtSumm" valign="top" multiline="true" onheight="parent.onheight"/>
   </class>
 
+  <!-- a list of buttons to load cards linked to this one (or all of them) -->
   <class name="linklist" extends="hbox" >
     <attribute name="list" value="null"/>
-    <attribute name="thisCardname" value="null"/>
-    <handler name="onthisCardname">
-        this.loadlist.setAttribute('text', thisCardname )
-    </handler>
-
     <handler name="onlist">
-      this.setAttribute('thisCardname', parent.trans_list)
+      this.loadlist.setAttribute('text', parent.trans_list )
       this.setAttribute('visible', 'true')
       this.repLink.setAttribute('nodes',list)
     </handler>

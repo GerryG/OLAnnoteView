@@ -1,8 +1,13 @@
 <library>
+  <!-- <scrollview> for creating a fixed sized viewport into a changing view.  It turns the
+       scrollbars on if the size of the view changes to bigger than the viewport -->
+
   <class name="scrollview" defaultplacement="content" clip="true" focusable="true">
     <attribute type="string" name="headtext" value="Your data:"/>
     <attribute type="string" name="foottext" value="End of data"/>
     <attribute name="widthfield" value="null"/>
+
+    <!-- This is the contained view, the "scrollview" element is the viewport (clipped) -->
     <view name="oneview">
       <simplelayout/>
       <text text="${parent.parent.headtext}"/>

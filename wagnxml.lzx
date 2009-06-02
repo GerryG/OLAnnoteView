@@ -1,6 +1,6 @@
 <library>
-  <script src="./getnote.lzs"/>
   <!-- Fetch annotations cards from wagn, and create views -->
+  <script src="./getnote.lzs"/>
 
   <!-- Data definitions -->
   <dataset name="httpwagn" request="true"
@@ -10,7 +10,6 @@
     <!-- fetch are card by name -->
     <method name="getCard" args="cardname">
       queue.push(cardname)
-//Debug.debug("Queue[%s] %d", cardname, queue.length)
       // One item (the new one) on queue, start the queue
       if (queue.length &lt; 2) {
         this.src = "http://74.0.57.155:3000/xmlcard/" + cardname
@@ -18,23 +17,28 @@
       }
     </method>
 
+    <!-- Have to handle errors or the que stops ... -->
     <handler name="onerror">
-//Debug.debug("Error: %w, %s, %d", this, thiscard, queue.length)
+      //Debug.debug("Error: %w, %s, %d", this, thiscard, queue.length)
+      this.queueNext()
+    </handler>
 
+    <!-- dequeue the current request, and start one if any -->
+    <method name="queueNext">
       // Dequeue current request and start a new one
       var thiscard = queue.shift()
       if (queue.length > 0) {
         var nextcard = queue[0]
-//Debug.debug("Next fetch: %s, %s, %d", nextcard, thiscard, queue.length)
         this.src = "http://74.0.57.155:3000/xmlcard/" + nextcard
         this.doRequest()
       }
-    </handler>
+    </method>
 
+    <!-- request returns data, start the next request, then display the data -->
     <handler name="ondata">
       this.cnodes = this.childNodes
-      this.onerror.sendEvent()
-      find_el(this.cnodes, listview)
+      this.queueNext()
+      find_notes(this.cnodes, listview)
     </handler>
   </dataset>
 
