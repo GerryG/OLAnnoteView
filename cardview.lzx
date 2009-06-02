@@ -18,6 +18,7 @@ oninit="Debug.debug('init cardview')">
     <attribute name="list"/>
 
     <method name="storeCard" args="">
+     <![CDATA[
 Debug.debug("storeCard Card before: %w", card)
 //Debug.debug("storeCard: %w\nCN:%s R:%s N:%s S:%s I:%s L:%s", this, trans_cardname, trans_rsrc, trans_note, trans_summary, trans_icon, trans_list)
 //Debug.debug("Locations CN:%w\nR:%w\nN:%w\nS:%w\nI:%w\nL:%w", cardname, rsrc, note, summary, icon, list)
@@ -41,7 +42,7 @@ Debug.debug( "Source info: Rsrc: %s, %w\nNote: %s, %w\nSumm: %s, %w",
       src_note[0].setAttribute('data', note.text)
       if (src_note.length > 1) {
 //Debug.debug("Clear children note %d", src_note.length)
-        for (var iidx = 1; iidx &lt; src_note.length; iidx++) {
+        for (var iidx = 1; iidx < src_note.length; iidx++) {
           src_note[iidx].setAttribute('data', '')
         }
       }
@@ -49,7 +50,7 @@ Debug.debug( "Source info: Rsrc: %s, %w\nNote: %s, %w\nSumm: %s, %w",
       src_summary[0].setAttribute('data', summary.text)
       if (src_summary.length > 1) {
 //Debug.debug("Clear children summary %d", src_summary.length)
-        for (var iidx = 1; iidx &lt; src_summary.length; iidx++) {
+        for (var iidx = 1; iidx < src_summary.length; iidx++) {
           src_summary[iidx].setAttribute('data', '')
         }
       }
@@ -62,6 +63,7 @@ Debug.debug( "Source after: Rsrc: %s, %w\nNote: %s, %w\nSumm: %s, %w",
    src_note[0], src_summary[0].data, src_summary[0] )
 Debug.debug("storeCard Card after : %w", card)
       // XML PUT card to httpwagn/BASE/card.getAttr('name')
+     ]]>
     </method>
 
     <method name="setField" args="field, thiscardname, node">
@@ -117,6 +119,9 @@ Debug.debug("storeCard Card after : %w", card)
     <linklist name="linkList" visible="false"/>
   </class>
 
+<!-- Views for components of a card annotation -->
+
+  <!-- <icon> .. an image -->
   <class name="icon">
     <attribute name="icon"/>
     <handler name="onicon"><![CDATA[
@@ -130,6 +135,10 @@ Debug.debug("storeCard Card after : %w", card)
     ]]></handler>
   </class>
 
+  <!-- <summary> .. the long description is scrollable veritcally. The widthfield parameter
+                    tells scrollview to set the width of that field to the space available,
+                    effectivly disabling horizontal scrolling by making the multi-line
+                    inputtext field tha same as the space -->
   <class name="summary" headtext="" foottext="" defaultplacement="itxtSumm"
          widthfield="${itxtSumm}" extends="scrollview">
 
@@ -140,27 +149,25 @@ Debug.debug("storeCard Card after : %w", card)
     <attribute name="list" value="null"/>
     <attribute name="thisCardname" value="null"/>
     <handler name="onthisCardname">
-      if (typeof thisCardname != 'undefined') {
-//Debug.debug(">>onthisCardname: %w %s", this.list, thisCardname)
         this.loadlist.setAttribute('text', thisCardname )
-      }
     </handler>
 
     <handler name="onlist">
-//Debug.debug("linklist: %w %w", this, list)
       this.setAttribute('thisCardname', parent.trans_list)
       this.setAttribute('visible', 'true')
-      //this.lpr.setAttribute('visible', 'true')
       this.repLink.setAttribute('nodes',list)
     </handler>
 
-    <!-- <text name="lpr" text="List:" visible="false"/> -->
+    <!-- cardlinks for the +list field, first button is
+         the pointer card for the whole list (loads all of them) -->
     <linkbutton name="loadlist"/>
     <replicator name="repLink">
       <linkbutton/>
     </replicator>
   </class>
 
+  <!-- a button linking to a card, pointer card is a special case,
+       no 'p' attribute from replicator-->
   <class name="linkbutton" text="$path{'cardref[text]'}" extends="button">
     <attribute name="target"/>
     <handler name="onclick"> canvas.httpwagn.getCard(target) </handler>
@@ -171,7 +178,6 @@ Debug.debug("storeCard Card after : %w", card)
       } else {
         this.setAttribute('target', this.text )
         this.setAttribute('visible', 'true' )
-        this.setAttribute('text', "Load List" )
       }
     </handler>
   </class>

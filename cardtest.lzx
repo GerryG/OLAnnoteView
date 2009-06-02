@@ -2,8 +2,9 @@
 <!--                                                                       -->
 <!-- cardtest.lzx                                                          -->
 <!--                                                                       -->
-<!-- Laszlo Application Language (LZX) Example                             -->
-<!--   Basic work with Wagn 'card' model                                   -->
+<!-- OpenLaszlo Application: Basic work with Wagn 'card' model             -->
+<!--   A widget to fetch a card by name, and a scrolling list of fetched   -->
+<!--   cards.                                                              -->
 <!--                                                                       -->
 <!--=======================================================================-->
 

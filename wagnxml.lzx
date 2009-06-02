@@ -1,5 +1,6 @@
 <library>
   <script src="./getnote.lzs"/>
+  <!-- Fetch annotations cards from wagn, and create views -->
 
   <!-- Data definitions -->
   <dataset name="httpwagn" request="true"
