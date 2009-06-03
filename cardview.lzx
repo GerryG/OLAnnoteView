@@ -22,8 +22,8 @@ oninit="Debug.debug('init cardview')">
 Debug.debug("store Card: %s, %w", card.getAttr('name'), card)
 
       //name
-      if (src_cardname != cardname.text) {
-Debug.debug("Rename not supported yet (ignoring) %s :: %s", src_cardname, cardname.text)
+      if (src_cardname != cardname) {
+Debug.debug("Rename not supported yet (ignoring) %s :: %s", src_cardname, cardname)
       }
 
       //rsrc
@@ -57,16 +57,18 @@ Debug.debug( "Source after: Rsrc: %w\nNote: %w\nSumm: %w", src_rsrc, src_note, s
      ]]>
     </method>
 
+    <handler name="oncardname">
+       hboxCard.itxtName.setAttribute('text',cardname)
+       //this.setAttribute('cardname', hboxCard.itxtName)
+    </handler>
+
     <method name="setField" args="field, thiscardname, node">
 if (field == 'card') {Debug.debug("Card: %s, F:%s T:%w N:%w", card.getAttr('name'), field, thiscardname, node)}
-       var value = (field == 'cardname') ? node : node.childNodes
+       //var value = (field == 'cardname') ? node : node.childNodes
+       var value = node.childNodes
        this.setAttribute("src_"+field, node)
        this.setAttribute("trans_"+field, thiscardname) // card.getAttr('name')
        switch(field) {
-       case "cardname":
-         hboxCard.itxtName.setAttribute('text',value)
-         this.setAttribute(field, hboxCard.itxtName)
-         break
        case "rsrc":
          hboxRsrc.itxtRsrc.setAttribute('text', value[0].getAttr('href'))
          this.setAttribute(field, hboxRsrc.itxtRsrc)

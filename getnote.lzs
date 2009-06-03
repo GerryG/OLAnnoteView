@@ -2,14 +2,13 @@
 /*
  * find_notes(nodes, parent, [element])]
  */
-function find_notes(nodes, parent, element='card', newnode=null) {
+function find_notes(nodes, parent, element='card', cardname='', newnode=null) {
   for (var idx=0; idx<nodes.length; idx++) {
     var subNode = nodes[idx]
     var t = subNode.nodeType
     var nodeName = subNode.nodeName
     var name = ''
     var type
-    if (newnode) { var cardname = newnode.cardname.text }
     //Debug.debug("Iter[%s,%s] t[%s] %w", idx, nodeName, t, subNode)
     if (t == lz.DataElement.ELEMENT_NODE) {
       var elemName = subNode.getAttr('name')
@@ -27,7 +26,7 @@ function find_notes(nodes, parent, element='card', newnode=null) {
           if (newnode) { Debug.error("Second cardname found: %w", newnode) }
           newnode = new lz.cardview(parent)
           newnode.setAttribute('card', subNode)
-          newnode.setField('cardname', cardname, cardname)
+          newnode.setAttribute('cardname', cardname)
           //Debug.debug("New card Name[%s] %w", cardname, newnode)
         }
       } else if (nodeName == element) {
@@ -52,15 +51,15 @@ function find_notes(nodes, parent, element='card', newnode=null) {
                   child.nodeName == 'no_card')
                 { nocont=true; break }
             }
-            if (!nocont && !newnode[name]) {
-Debug.debug("Set Cardname: %s", cardname)
+            if (!nocont && !newnode.name) {
+//Debug.debug("Set Field[%s] CN:%s NN:%w", name, cardname, newnode)
               newnode.setField(name, cardname, subNode)
             }
           }
           continue
         }
       }
-      if (children) { find_notes(children, parent, element, newnode) }
+      if (children) { find_notes(children, parent, element, cardname, newnode) }
     }
   }
 }
