@@ -7,7 +7,7 @@
 
   <!-- An Annotation View -->
   <class name="cardview" extends="vbox"
-oninit="Debug.debug('init cardview')">
+         oncardname="hboxCard.itxtName.setAttribute('text',cardname)">
 
     <attribute name="card"/>
     <attribute name="cardname"/>
@@ -19,12 +19,9 @@ oninit="Debug.debug('init cardview')">
 
     <method name="storeCard" args="">
      <![CDATA[
-//Debug.debug("store Card: %s, %w", card.getAttr('name'), card)
-
       //name
-      if (src_cardname.text != cardname) {
-       //hboxCard.itxtName.setAttribute('text',cardname)
-Debug.debug("Rename not supported yet (ignoring) %s :: %s", src_cardname, cardname)
+      if (hboxCard.itxtName.text != cardname) {
+Debug.debug("Rename not supported yet (ignoring) %s :: %s", hboxCard.itxtName.text, cardname)
       }
 
       //rsrc
@@ -34,36 +31,27 @@ Debug.debug("Rename not supported yet (ignoring) %s :: %s", src_cardname, cardna
       } else {
         children[0].setAttr('href', rsrc.text)
         children[0].childNodes[0].data = rsrc.text
-//Debug.debug("SetRsrc: %w :: %w", children[0], children[0].childNodes)
       }
 
       //note
       var xmlData = [new lz.DataText(note.text)]
       src_note.setAttribute('childNodes', xmlData)
-//Debug.debug("src_note:%w\n::%s %w", src_note, note.text, xmlData)
 
       //summary
       xmlData = [new lz.DataText(summary.text)]
       src_summary.setAttribute('childNodes', xmlData)
-//Debug.debug("src_summary:%w\ndata: %s :: %w", src_summary, xmlData, xmlData)
 
       //icon (no icon edit/upload widget yet)
       //src_icon = icon.icon
       //list (no list edit yet either)
       //src_list = icon.list
-//Debug.debug("storeCard Card after : %w\n%s", card, card)
+Debug.debug("storeCard Card after : %w\n%s", card, card)
 //Debug.debug( "Source after: Rsrc: %w\nNote: %w\nSumm: %w", src_rsrc, src_note, src_summary )
       // XML PUT card to httpwagn/BASE/card.getAttr('name')
      ]]>
     </method>
 
-    <handler name="oncardname">
-       hboxCard.itxtName.setAttribute('text',cardname)
-       this.setAttribute('src_cardname', hboxCard.itxtName)
-    </handler>
-
     <method name="setField" args="field, thiscardname, node">
-if (field == 'card') {Debug.debug("Card: %s, F:%s T:%w N:%w", card.getAttr('name'), field, thiscardname, node)}
        //var value = (field == 'cardname') ? node : node.childNodes
        var value = node.childNodes
        this.setAttribute("src_"+field, node)
