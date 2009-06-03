@@ -13,17 +13,13 @@
 
   <include href="platform.lzx"/>
 
-  <include href="cardlist.lzx"/>
   <include href="cardview.lzx"/>
   <include href="wagnxml.lzx"/>
   
   <vbox spacing="10">
     <query/>
 
-    <scrollview id="listView" headtext="List of Annotations Fetched"
-                foottext="End of List" height="${canvas.height-this.y}"
-                width="${canvas.width}">
-      <cardlist/>
-    </scrollview>
+   <list id="listview" itemclassname="cardview" bgcolor="#e5f5e5"
+         height="${canvas.height-this.y}" width="${canvas.width}"/>
   </vbox>
 </canvas>
