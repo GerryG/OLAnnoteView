@@ -3,19 +3,21 @@
 
 <library>
   <include href="base/image.lzx"/>
+  <include href="restful.lzx"/>
   <include href="scroll.lzx"/>
 
   <!-- An Annotation View -->
-  <class name="cardview" extends="vbox"
-         oncardname="hboxCard.itxtName.setAttribute('text',cardname)">
+  <class name="cardview" extends="vbox">
 
     <attribute name="card"/>
+    <attribute name="url"/>
     <attribute name="cardname"/>
     <attribute name="rsrc"/>
     <attribute name="note"/>
     <attribute name="summary"/>
     <attribute name="icon"/>
     <attribute name="list"/>
+    <handler name="oncardname">hboxCard.itxtName.setAttribute('text',cardname)</handler>
 
     <method name="storeCard" args="">
      <![CDATA[
@@ -47,7 +49,14 @@ Debug.debug("Rename not supported yet (ignoring) %s :: %s", hboxCard.itxtName.te
       //src_list = icon.list
 Debug.debug("storeCard Card after : %w\n%s", card, card)
 //Debug.debug( "Source after: Rsrc: %w\nNote: %w\nSumm: %w", src_rsrc, src_note, src_summary )
+
       // XML PUT card to httpwagn/BASE/card.getAttr('name')
+      var req = new lz.XMLHttpRequest();
+      //req.onreadystatechange = processReqChange;
+      req.open("PUT", url, true, 'admin', '');
+      //req.setRequestHeader('X-Test', 'one');
+      //req.setRequestHeader('X-Test', 'two');
+      req.send(null);
      ]]>
     </method>
 

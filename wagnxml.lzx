@@ -5,7 +5,7 @@
   <!-- Data definitions -->
   <dataset name="httpwagn" request="true" queuerequests="true"
            onerror="Debug.debug('Error: %w', this)"
-           ondata="find_notes(this.childNodes, listview)"
+           ondata="find_notes(childNodes, listview)"
            src="http://74.0.57.155:3000/xmlcard/AnnoteCard">
 
     <!-- fetch are card by name -->
