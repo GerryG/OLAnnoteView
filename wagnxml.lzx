@@ -3,43 +3,16 @@
   <script src="./getnote.lzs"/>
 
   <!-- Data definitions -->
-  <dataset name="httpwagn" request="true"
+  <dataset name="httpwagn" request="true" queuerequests="true"
+           onerror="Debug.debug('Error: %w', this)"
+           ondata="find_notes(this.childNodes, listview)"
            src="http://74.0.57.155:3000/xmlcard/AnnoteCard">
-    <attribute name="queue" value="['AnnoteCard']"/>
 
     <!-- fetch are card by name -->
     <method name="getCard" args="cardname">
-      queue.push(cardname)
-      // One item (the new one) on queue, start the queue
-      if (queue.length &lt; 2) {
-        this.src = "http://74.0.57.155:3000/xmlcard/" + cardname
-        this.doRequest()
-      }
+      this.src = "http://74.0.57.155:3000/xmlcard/" + cardname
+      this.doRequest()
     </method>
-
-    <!-- Have to handle errors or the que stops ... -->
-    <handler name="onerror">
-      //Debug.debug("Error: %w, %s, %d", this, thiscard, queue.length)
-      this.queueNext()
-    </handler>
-
-    <!-- dequeue the current request, and start one if any -->
-    <method name="queueNext">
-      // Dequeue current request and start a new one
-      var thiscard = queue.shift()
-      if (queue.length > 0) {
-        var nextcard = queue[0]
-        this.src = "http://74.0.57.155:3000/xmlcard/" + nextcard
-        this.doRequest()
-      }
-    </method>
-
-    <!-- request returns data, start the next request, then display the data -->
-    <handler name="ondata">
-      this.cnodes = this.childNodes
-      this.queueNext()
-      find_notes(this.cnodes, listview)
-    </handler>
   </dataset>
 
   <!-- Prompt for a card and fetch it on click -->
