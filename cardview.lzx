@@ -19,57 +19,48 @@ oninit="Debug.debug('init cardview')">
 
     <method name="storeCard" args="">
      <![CDATA[
-Debug.debug("storeCard Card before: %w", card)
-//Debug.debug("storeCard: %w\nCN:%s R:%s N:%s S:%s I:%s L:%s", this, trans_cardname, trans_rsrc, trans_note, trans_summary, trans_icon, trans_list)
-//Debug.debug("Locations CN:%w\nR:%w\nN:%w\nS:%w\nI:%w\nL:%w", cardname, rsrc, note, summary, icon, list)
-//Debug.debug("Data CN:%s\nR:%s\nN:%s\nS:%s\nI:%s\nL:%w", cardname.text, rsrc.text, note.text, summary.text, icon.icon, list.list)
-//Debug.debug("Card: %s, %w", card.getAttr('name'), card)
+Debug.debug("store Card: %s, %w", card.getAttr('name'), card)
 
       //name
       if (src_cardname != cardname.text) {
-//Debug.debug("Rename not supported yet (ignoring) %s :: %s", src_cardname, cardname.text)
+Debug.debug("Rename not supported yet (ignoring) %s :: %s", src_cardname, cardname.text)
       }
-Debug.debug( "Source info: Rsrc: %s, %w\nNote: %s, %w\nSumm: %s, %w",
-   src_rsrc[0].getAttr('href'), src_rsrc[0], src_note[0].data,
-   src_note[0], src_summary[0].data, src_summary[0] )
 
       //rsrc
-      src_rsrc[0].setAttr('href', rsrc.text)
-      if (src_note.length > 1) {
-//Debug.debug("Extra children rsrc %d", src_note.length)
+      var children = src_rsrc.childNodes
+      if (children.length > 1) {
+        Debug.debug("Extra children rsrc %d", src_note.length)
+      } else {
+        children[0].setAttr('href', rsrc.text)
+        children[0].childNodes[0].data = rsrc.text
+//Debug.debug("SetRsrc: %w :: %w", children[0], children[0].childNodes)
       }
+
       //note
-      src_note[0].setAttribute('data', note.text)
-      if (src_note.length > 1) {
-//Debug.debug("Clear children note %d", src_note.length)
-        for (var iidx = 1; iidx < src_note.length; iidx++) {
-          src_note[iidx].setAttribute('data', '')
-        }
-      }
+      var xmlData = [lz.DataText.LzDataText(note.text)]
+      src_note.setAttribute('childNodes', xmlData)
+Debug.debug("src_note:%w\n::%s %w", src_note, note.text, xmlData)
+
       //summary
-      src_summary[0].setAttribute('data', summary.text)
-      if (src_summary.length > 1) {
-//Debug.debug("Clear children summary %d", src_summary.length)
-        for (var iidx = 1; iidx < src_summary.length; iidx++) {
-          src_summary[iidx].setAttribute('data', '')
-        }
-      }
+      //xmlData = lz.DataElement.valueToElement(summary.text)
+      xmlData = [lz.DataText.LzDataText(summary.text)]
+      src_summary.setAttribute('childNodes', xmlData)
+Debug.debug("src_summary:%w\ndata: %s :: %w", src_summary, xmlData, xmlData)
+
       //icon (no icon edit/upload widget yet)
       //src_icon = icon.icon
       //list (no list edit yet either)
       //src_list = icon.list
-Debug.debug( "Source after: Rsrc: %s, %w\nNote: %s, %w\nSumm: %s, %w",
-   src_rsrc[0].getAttr('href'), src_rsrc[0], src_note[0].data,
-   src_note[0], src_summary[0].data, src_summary[0] )
 Debug.debug("storeCard Card after : %w", card)
+Debug.debug( "Source after: Rsrc: %w\nNote: %w\nSumm: %w", src_rsrc, src_note, src_summary )
       // XML PUT card to httpwagn/BASE/card.getAttr('name')
      ]]>
     </method>
 
     <method name="setField" args="field, thiscardname, node">
-//Debug.debug("Card: %s, F:%s T:%w N:%w", card.getAttr('name'), field, thiscardname, node)
-       this.setAttribute("src_"+field, value)
+if (field == 'card') {Debug.debug("Card: %s, F:%s T:%w N:%w", card.getAttr('name'), field, thiscardname, node)}
        var value = (field == 'cardname') ? node : node.childNodes
+       this.setAttribute("src_"+field, node)
        this.setAttribute("trans_"+field, thiscardname) // card.getAttr('name')
        switch(field) {
        case "cardname":
